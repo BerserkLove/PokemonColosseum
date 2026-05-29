@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/"
+  to = "/pokemon_colosseum.html"
+  status = 200
