@@ -1,0 +1,1659 @@
+{
+  "$schema": "pokemon-colosseum.evolution-mapping.v1",
+  "version": "1.1.1",
+  "notes": [
+    "Evolution Stone reads only normalEvolutions, splitEvolutions and formUpgrades.",
+    "Evolution Stone must not read megaEvolutions or specialQuestEvolutions.",
+    "specialQuestEvolutions are triggered only by quest/item systems.",
+    "megaEvolutions are triggered only by the Mega Evolution selection step.",
+    "This file is intended to be the single source of truth for future evolution behavior."
+  ],
+  "evolutionStoneEnabledCategories": [
+    "normalEvolutions",
+    "splitEvolutions",
+    "formUpgrades"
+  ],
+  "normalEvolutions": {
+    "abra": "kadabra",
+    "aipom": "ambipom",
+    "alola": "alola vacation gone wrong team",
+    "amaura": "aurorus",
+    "anorith": "armaldo",
+    "archen": "archeops",
+    "arctibax": "baxcalibur",
+    "aron": "lairon",
+    "arrokuda": "barraskewda",
+    "axew": "fraxure",
+    "azurill": "marill",
+    "bagon": "shelgon",
+    "baltoy": "claydol",
+    "barboach": "whiscash",
+    "bayleef": "meganium",
+    "beldum": "metang",
+    "bellsprout": "weepinbell",
+    "bidoof": "bibarel",
+    "bisharp": "kingambit",
+    "blipbug": "dottler",
+    "blitzle": "zebstrika",
+    "boldore": "gigalith",
+    "bonsly": "sudowoodo",
+    "bounsweet": "steenee",
+    "bramblin": "brambleghast",
+    "bronzor": "bronzong",
+    "budew": "roselia",
+    "bug": "https:\n rock:",
+    "buizel": "floatzel",
+    "bulbasaur": "ivysaur",
+    "buneary": "lopunny",
+    "cacnea": "cacturne",
+    "capsakid": "scovillain",
+    "carkol": "coalossal",
+    "carvanha": "sharpedo",
+    "cascoon": "dustox",
+    "caterpie": "metapod",
+    "cetoddle": "cetitan",
+    "chansey": "blissey",
+    "charjabug": "vikavolt",
+    "charmander": "charmeleon",
+    "charmeleon": "charizard",
+    "cherubi": "cherrim",
+    "chewtle": "drednaw",
+    "chikorita": "bayleef",
+    "chimchar": "monferno",
+    "chinchou": "lanturn",
+    "clefairy": "clefable",
+    "cleffa": "clefairy",
+    "clobbopus": "grapploct",
+    "combusken": "blaziken",
+    "corphish": "crawdaunt",
+    "corsola-galar": "cursola",
+    "corvisquire": "corviknight",
+    "cosmog": "cosmoem",
+    "cottonee": "whimsicott",
+    "crabrawler": "crabominable",
+    "cranidos": "rampardos",
+    "croagunk": "toxicroak",
+    "crocalor": "skeledirge",
+    "croconaw": "feraligatr",
+    "cubchoo": "beartic",
+    "cufant": "copperajah",
+    "cutiefly": "ribombee",
+    "cyndaquil": "quilava",
+    "dark": "https:\n steel:",
+    "darumaka": "darmanitan",
+    "darumaka-galar": "darmanitan-galar-standard",
+    "deerling": "sawsbuck",
+    "deino": "zweilous",
+    "desc": "transforms vaporeon, flareon, or jolteon into suicune, entei, or raikou. grants +300 quest bonus.",
+    "dewpider": "araquanid",
+    "diglett": "dugtrio",
+    "diglett-alola": "dugtrio-alola",
+    "dipplin": "hydrapple",
+    "displayname": "eternal floette",
+    "doduo": "dodrio",
+    "dolliv": "arboliva",
+    "dottler": "orbeetle",
+    "dragonair": "dragonite",
+    "drakloak": "dragapult",
+    "dratini": "dragonair",
+    "dreepy": "drakloak",
+    "drifloon": "drifblim",
+    "drilbur": "excadrill",
+    "drowzee": "hypno",
+    "ducklett": "swanna",
+    "duosion": "reuniclus",
+    "duraludon": "archaludon",
+    "dusclops": "dusknoir",
+    "duskull": "dusclops",
+    "dwebble": "crustle",
+    "eelektrik": "eelektross",
+    "ekans": "arbok",
+    "electabuzz": "electivire",
+    "electric": "https:\n grass:",
+    "electrike": "manectric",
+    "elekid": "electabuzz",
+    "elgyem": "beheeyem",
+    "fairy": "https:\n};\nfunction platesprite(type){return plate-sprites[type]||plate-sprites.normal}\nfunction itemdisplayname(){\n if(!selecteditem)return ",
+    "farfetchd-galar": "sirfetchd",
+    "feebas": "milotic",
+    "ferroseed": "ferrothorn",
+    "fidough": "dachsbun",
+    "finizen": "palafin",
+    "finneon": "lumineon",
+    "fire": "https:\n water:",
+    "flaaffy": "ampharos",
+    "flittle": "espathra",
+    "floragato": "meowscarada",
+    "flying": "https:\n psychic:",
+    "fomantis": "lurantis",
+    "foongus": "amoonguss",
+    "fraxure": "haxorus",
+    "frigibax": "arctibax",
+    "frillish": "jellicent",
+    "fuecoco": "crocalor",
+    "gabite": "garchomp",
+    "galar": "galar stadium noise complaint team",
+    "gastly": "haunter",
+    "geodude": "graveler",
+    "geodude-alola": "graveler-alola",
+    "ghost": "https:\n dragon:",
+    "gible": "gabite",
+    "gimmighoul": "gholdengo",
+    "gimmighoul-chest": "gholdengo",
+    "gimmighoul-roaming": "gholdengo",
+    "girafarig": "farigiraf",
+    "glameow": "purugly",
+    "gligar": "gliscor",
+    "glimmet": "glimmora",
+    "golbat": "crobat",
+    "goldeen": "seaking",
+    "golett": "golurk",
+    "gossifleur": "eldegoss",
+    "gothita": "gothorita",
+    "gothorita": "gothitelle",
+    "graveler": "golem",
+    "graveler-alola": "golem-alola",
+    "greavard": "houndstone",
+    "grimer": "muk",
+    "grimer-alola": "muk-alola",
+    "grotle": "torterra",
+    "grovyle": "sceptile",
+    "growlithe": "arcanine",
+    "growlithe-hisui": "arcanine-hisui",
+    "grubbin": "charjabug",
+    "gulpin": "swalot",
+    "gurdurr": "conkeldurr",
+    "hakamo-o": "kommo-o",
+    "happiny": "chansey",
+    "hatenna": "hattrem",
+    "hattrem": "hatterene",
+    "haunter": "gengar",
+    "herdier": "stoutland",
+    "hippopotas": "hippowdon",
+    "hoenn": "hoenn weather crimes team",
+    "hoothoot": "noctowl",
+    "hoppip": "skiploom",
+    "horsea": "seadra",
+    "houndour": "houndoom",
+    "ice": "https:\n fighting:",
+    "icon": "🎒",
+    "id": "rainbow-feather",
+    "igglybuff": "jigglypuff",
+    "impidimp": "morgrem",
+    "ivysaur": "venusaur",
+    "jangmo-o": "hakamo-o",
+    "jigglypuff": "wigglytuff",
+    "johto": "johto bell tower brawlers",
+    "joltik": "galvantula",
+    "kabuto": "kabutops",
+    "kadabra": "alakazam",
+    "kakuna": "beedrill",
+    "kalos": "kalos fashionably violent team",
+    "kanto": "kanto mayhem team",
+    "karrablast": "escavalier",
+    "klang": "klinklang",
+    "klink": "klang",
+    "krabby": "kingler",
+    "kricketot": "kricketune",
+    "krokorok": "krookodile",
+    "label": "world cap pikachu",
+    "lairon": "aggron",
+    "lampent": "chandelure",
+    "larvesta": "volcarona",
+    "larvitar": "pupitar",
+    "lechonk": "oinkologne",
+    "ledyba": "ledian",
+    "lickitung": "lickilicky",
+    "lileep": "cradily",
+    "lillipup": "herdier",
+    "linoone-galar": "obstagoon",
+    "litwick": "lampent",
+    "lombre": "ludicolo",
+    "lotad": "lombre",
+    "loudred": "exploud",
+    "luxio": "luxray",
+    "machoke": "machamp",
+    "machop": "machoke",
+    "magby": "magmar",
+    "magikarp": "gyarados",
+    "magmar": "magmortar",
+    "magnemite": "magneton",
+    "magneton": "magnezone",
+    "makuhita": "hariyama",
+    "mankey": "primeape",
+    "mantyke": "mantine",
+    "mareanie": "toxapex",
+    "mareep": "flaaffy",
+    "marill": "azumarill",
+    "marshtomp": "swampert",
+    "maschiff": "mabosstiff",
+    "meditite": "medicham",
+    "meltan": "melmetal",
+    "meowth": "persian",
+    "meowth-alola": "persian-alola",
+    "meowth-galar": "perrserker",
+    "metang": "metagross",
+    "metapod": "butterfree",
+    "mienfoo": "mienshao",
+    "milcery": "alcremie",
+    "minccino": "cinccino",
+    "misdreavus": "mismagius",
+    "monferno": "infernape",
+    "morelull": "shiinotic",
+    "morgrem": "grimmsnarl",
+    "mr-mime-galar": "mr-rime",
+    "mudbray": "mudsdale",
+    "mudkip": "marshtomp",
+    "munchlax": "snorlax",
+    "munna": "musharna",
+    "murkrow": "honchkrow",
+    "nacli": "naclstack",
+    "naclstack": "garganacl",
+    "name": "floette-eternal",
+    "natu": "xatu",
+    "nickit": "thievul",
+    "nidoran-f": "nidorina",
+    "nidoran-m": "nidorino",
+    "nidorina": "nidoqueen",
+    "nidorino": "nidoking",
+    "nosepass": "probopass",
+    "numel": "camerupt",
+    "nuzleaf": "shiftry",
+    "nymble": "lokix",
+    "oddish": "gloom",
+    "omanyte": "omastar",
+    "onix": "steelix",
+    "oshawott": "dewott",
+    "paldea": "paldea lunchbox riot team",
+    "palpitoad": "seismitoad",
+    "panpour": "simipour",
+    "pansage": "simisage",
+    "pansear": "simisear",
+    "paras": "parasect",
+    "patrat": "watchog",
+    "pawmi": "pawmo",
+    "pawmo": "pawmot",
+    "pawniard": "bisharp",
+    "phanpy": "donphan",
+    "pichu": "pikachu",
+    "pidgeotto": "pidgeot",
+    "pidgey": "pidgeotto",
+    "pidove": "tranquill",
+    "pignite": "emboar",
+    "pikachu": "raichu",
+    "pikipek": "trumbeak",
+    "piloswine": "mamoswine",
+    "pineco": "forretress",
+    "piplup": "prinplup",
+    "poipole": "naganadel",
+    "poison": "https:\n ground:",
+    "pokeapi": "raikou",
+    "poliwag": "poliwhirl",
+    "poltchageist": "sinistcha",
+    "ponyta": "rapidash",
+    "ponyta-galar": "rapidash-galar",
+    "poochyena": "mightyena",
+    "porygon": "porygon2",
+    "porygon2": "porygon-z",
+    "primeape": "annihilape",
+    "prinplup": "empoleon",
+    "psyduck": "golduck",
+    "pupitar": "tyranitar",
+    "purrloin": "liepard",
+    "quaxly": "quaxwell",
+    "quaxwell": "quaquaval",
+    "qwilfish-hisui": "overqwil",
+    "ralts": "kirlia",
+    "rattata": "raticate",
+    "rattata-alola": "raticate-alola",
+    "rellor": "rabsca",
+    "remoraid": "octillery",
+    "rhydon": "rhyperior",
+    "rhyhorn": "rhydon",
+    "riolu": "lucario",
+    "roggenrola": "boldore",
+    "rolycoly": "carkol",
+    "rookidee": "corvisquire",
+    "roselia": "roserade",
+    "salandit": "salazzle",
+    "sandile": "krokorok",
+    "sandshrew": "sandslash",
+    "sandshrew-alola": "sandslash-alola",
+    "sandygast": "palossand",
+    "scraggy": "scrafty",
+    "seadra": "kingdra",
+    "sealeo": "walrein",
+    "seedot": "nuzleaf",
+    "seel": "dewgong",
+    "sentret": "furret",
+    "servine": "serperior",
+    "sewaddle": "swadloon",
+    "shelgon": "salamence",
+    "shellder": "cloyster",
+    "shellos": "gastrodon",
+    "shieldon": "bastiodon",
+    "shinx": "luxio",
+    "shinysprite": "assets/special/eternal-floette.png",
+    "shroodle": "grafaiai",
+    "shroomish": "breloom",
+    "shuppet": "banette",
+    "silcoon": "beautifly",
+    "silicobra": "sandaconda",
+    "sinistea": "polteageist",
+    "sinnoh": "sinnoh myth crunch team",
+    "sizzlipede": "centiskorch",
+    "skiploom": "jumpluff",
+    "skitty": "delcatty",
+    "skorupi": "drapion",
+    "skwovet": "greedent",
+    "slakoth": "vigoroth",
+    "sliggoo": "goodra",
+    "sliggoo-hisui": "goodra-hisui",
+    "slugma": "magcargo",
+    "smoliv": "dolliv",
+    "smoochum": "jynx",
+    "sneasel": "weavile",
+    "sneasel-hisui": "sneasler",
+    "snivy": "servine",
+    "snom": "frosmoth",
+    "snover": "abomasnow",
+    "snubbull": "granbull",
+    "solosis": "duosion",
+    "spearow": "fearow",
+    "spheal": "sealeo",
+    "spinarak": "ariados",
+    "spoink": "grumpig",
+    "sprigatito": "floragato",
+    "sprite": "assets/special/eternal-floette.png",
+    "squirtle": "wartortle",
+    "stantler": "wyrdeer",
+    "staravia": "staraptor",
+    "starly": "staravia",
+    "staryu": "starmie",
+    "steenee": "tsareena",
+    "stufful": "bewear",
+    "stunky": "skuntank",
+    "sunkern": "sunflora",
+    "surskit": "masquerain",
+    "swablu": "altaria",
+    "swadloon": "leavanny",
+    "swinub": "piloswine",
+    "tadbulb": "bellibolt",
+    "taillow": "swellow",
+    "tangela": "tangrowth",
+    "tarountula": "spidops",
+    "teddiursa": "ursaring",
+    "tentacool": "tentacruel",
+    "tepig": "pignite",
+    "timburr": "gurdurr",
+    "tinkatink": "tinkatuff",
+    "tinkatuff": "tinkaton",
+    "tirtouga": "carracosta",
+    "toedscool": "toedscruel",
+    "togepi": "togetic",
+    "togetic": "togekiss",
+    "torchic": "combusken",
+    "totodile": "croconaw",
+    "tranquill": "unfezant",
+    "trapinch": "vibrava",
+    "treecko": "grovyle",
+    "trubbish": "garbodor",
+    "trumbeak": "toucannon",
+    "turtwig": "grotle",
+    "tympole": "palpitoad",
+    "tynamo": "eelektrik",
+    "type-null": "silvally",
+    "tyrunt": "tyrantrum",
+    "unova": "unova subway incident team",
+    "ursaring": "ursaluna",
+    "vanillish": "vanilluxe",
+    "vanillite": "vanillish",
+    "varoom": "revavroom",
+    "venipede": "whirlipede",
+    "venonat": "venomoth",
+    "vibrava": "flygon",
+    "vigoroth": "slaking",
+    "voltorb": "electrode",
+    "voltorb-hisui": "electrode-hisui",
+    "vullaby": "mandibuzz",
+    "vulpix": "ninetales",
+    "vulpix-alola": "ninetales-alola",
+    "wailmer": "wailord",
+    "wartortle": "blastoise",
+    "wattrel": "kilowattrel",
+    "weedle": "kakuna",
+    "weepinbell": "victreebel",
+    "whirlipede": "scolipede",
+    "whismur": "loudred",
+    "wiglett": "wugtrio",
+    "wimpod": "golisopod",
+    "wingull": "pelipper",
+    "woobat": "swoobat",
+    "wooloo": "dubwool",
+    "wooper": "quagsire",
+    "wooper-paldea": "clodsire",
+    "wynaut": "wobbuffet",
+    "yamask": "cofagrigus",
+    "yamask-galar": "runerigus",
+    "yamper": "boltund",
+    "yanma": "yanmega",
+    "yungoos": "gumshoos",
+    "zigzagoon": "linoone",
+    "zigzagoon-galar": "linoone-galar",
+    "zorua": "zoroark",
+    "zorua-hisui": "zoroark-hisui",
+    "zubat": "golbat",
+    "zweilous": "hydreigon"
+  },
+  "splitEvolutions": {
+    "applin": [
+      "flapple",
+      "appletun",
+      "dipplin"
+    ],
+    "basculin-white-striped": [
+      "basculegion"
+    ],
+    "bergmite": [
+      "avalugg",
+      "avalugg-hisui"
+    ],
+    "burmy": [
+      "wormadam-plant",
+      "wormadam-sandy",
+      "wormadam-trash",
+      "mothim"
+    ],
+    "charcadet": [
+      "armarouge",
+      "ceruledge"
+    ],
+    "clamperl": [
+      "huntail",
+      "gorebyss"
+    ],
+    "cosmoem": [
+      "solgaleo",
+      "lunala"
+    ],
+    "cubone": [
+      "marowak",
+      "marowak-alola"
+    ],
+    "dartrix": [
+      "decidueye",
+      "decidueye-hisui"
+    ],
+    "dewott": [
+      "samurott",
+      "samurott-hisui"
+    ],
+    "dunsparce": [
+      "dudunsparce"
+    ],
+    "eevee": [
+      "vaporeon",
+      "jolteon",
+      "flareon",
+      "espeon",
+      "umbreon",
+      "leafeon",
+      "glaceon",
+      "sylveon"
+    ],
+    "espurr": [
+      "meowstic-male",
+      "meowstic-female"
+    ],
+    "exeggcute": [
+      "exeggutor",
+      "exeggutor-alola"
+    ],
+    "gloom": [
+      "vileplume",
+      "bellossom"
+    ],
+    "goomy": [
+      "sliggoo",
+      "sliggoo-hisui"
+    ],
+    "kirlia": [
+      "gardevoir",
+      "gallade"
+    ],
+    "koffing": [
+      "weezing",
+      "weezing-galar"
+    ],
+    "kubfu": [
+      "urshifu-single-strike",
+      "urshifu-rapid-strike"
+    ],
+    "mime-jr": [
+      "mr-mime",
+      "mr-mime-galar"
+    ],
+    "nincada": [
+      "ninjask",
+      "shedinja"
+    ],
+    "petilil": [
+      "lilligant",
+      "lilligant-hisui"
+    ],
+    "pichu-spiky-eared": [
+      "pikachu"
+    ],
+    "poliwhirl": [
+      "poliwrath",
+      "politoed"
+    ],
+    "quilava": [
+      "typhlosion",
+      "typhlosion-hisui"
+    ],
+    "rockruff": [
+      "lycanroc-midday",
+      "lycanroc-midnight",
+      "lycanroc-dusk"
+    ],
+    "rufflet": [
+      "braviary",
+      "braviary-hisui"
+    ],
+    "scyther": [
+      "scizor",
+      "kleavor"
+    ],
+    "slowpoke": [
+      "slowbro",
+      "slowking"
+    ],
+    "slowpoke-galar": [
+      "slowbro-galar",
+      "slowking-galar"
+    ],
+    "snorunt": [
+      "glalie",
+      "froslass"
+    ],
+    "tandemaus": [
+      "maushold"
+    ],
+    "toxel": [
+      "toxtricity-amped",
+      "toxtricity-low-key"
+    ],
+    "tyrogue": [
+      "hitmonlee",
+      "hitmonchan",
+      "hitmontop"
+    ],
+    "wurmple": [
+      "silcoon",
+      "cascoon"
+    ]
+  },
+  "formUpgrades": {
+    "zygarde-10": [
+      "zygarde-50"
+    ],
+    "zygarde-50": [
+      "zygarde-complete"
+    ]
+  },
+  "specialQuestEvolutions": {
+    "rainbowFeather": {
+      "enabledBy": "item:rainbow_feather",
+      "notTriggeredBy": [
+        "evolution_stone"
+      ],
+      "paths": {
+        "vaporeon": {
+          "target": "suicune",
+          "bonus": 300
+        },
+        "flareon": {
+          "target": "entei",
+          "bonus": 300
+        },
+        "jolteon": {
+          "target": "raikou",
+          "bonus": 300
+        }
+      }
+    },
+    "dnaSplicersKyurem": {
+      "trigger": "kyurem + reshiram OR kyurem + zekrom",
+      "notTriggeredBy": [
+        "evolution_stone"
+      ],
+      "paths": {
+        "kyurem+reshiram": {
+          "target": "kyurem-white",
+          "displayName": "White Kyurem",
+          "bonus": 300,
+          "opensTeamSlot": true
+        },
+        "kyurem+zekrom": {
+          "target": "kyurem-black",
+          "displayName": "Black Kyurem",
+          "bonus": 300,
+          "opensTeamSlot": true
+        }
+      }
+    },
+    "kinglyFusion": {
+      "trigger": "calyrex + glastrier OR calyrex + spectrier",
+      "notTriggeredBy": [
+        "evolution_stone"
+      ],
+      "paths": {
+        "calyrex+glastrier": {
+          "target": "calyrex-ice",
+          "displayName": "Ice Rider Calyrex",
+          "bonus": 300,
+          "opensTeamSlot": true
+        },
+        "calyrex+spectrier": {
+          "target": "calyrex-shadow",
+          "displayName": "Shadow Rider Calyrex",
+          "bonus": 300,
+          "opensTeamSlot": true
+        }
+      }
+    },
+    "ancientOrbPrimals": {
+      "trigger": "grunt defeated + groudon OR kyogre",
+      "notTriggeredBy": [
+        "evolution_stone",
+        "mega_evolution"
+      ],
+      "oneChoiceOnly": true,
+      "paths": {
+        "groudon": {
+          "target": "groudon-primal",
+          "displayName": "Primal Groudon",
+          "bonus": 300
+        },
+        "kyogre": {
+          "target": "kyogre-primal",
+          "displayName": "Primal Kyogre",
+          "bonus": 300
+        }
+      }
+    },
+    "rotomPokedex": {
+      "trigger": "item:pokedex + rotom",
+      "notTriggeredBy": [
+        "evolution_stone"
+      ],
+      "paths": {
+        "rotom": {
+          "target": "rotom-pokedex",
+          "displayName": "Rotom Pokédex",
+          "bonus": 300,
+          "pokedexReusable": true
+        }
+      }
+    },
+    "arceusPlatePower": {
+      "trigger": "item:elemental_plate + arceus",
+      "notTriggeredBy": [
+        "evolution_stone"
+      ],
+      "paths": {
+        "arceus": {
+          "target": "arceus-{selectedPlateType}",
+          "bonus": 300
+        }
+      }
+    }
+  },
+  "megaEvolutions": {
+    "abomasnow": [
+      {
+        "name": "Abomasnow Mega",
+        "target": "abomasnow-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "absol": [
+      {
+        "name": "Absol Mega",
+        "target": "absol-mega",
+        "source": "pokeapi"
+      },
+      {
+        "name": "Mega Absol Z",
+        "target": null,
+        "types": [
+          "dark"
+        ],
+        "asset": "assets/custom-mega/mega-absol-z.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-absol-z.png",
+        "source": "custom-local"
+      }
+    ],
+    "aerodactyl": [
+      {
+        "name": "Aerodactyl Mega",
+        "target": "aerodactyl-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "aggron": [
+      {
+        "name": "Aggron Mega",
+        "target": "aggron-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "alakazam": [
+      {
+        "name": "Alakazam Mega",
+        "target": "alakazam-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "altaria": [
+      {
+        "name": "Altaria Mega",
+        "target": "altaria-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "ampharos": [
+      {
+        "name": "Ampharos Mega",
+        "target": "ampharos-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "audino": [
+      {
+        "name": "Audino Mega",
+        "target": "audino-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "banette": [
+      {
+        "name": "Banette Mega",
+        "target": "banette-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "barbaracle": [
+      {
+        "name": "Mega Barbaracle",
+        "target": null,
+        "types": [
+          "rock",
+          "water"
+        ],
+        "asset": "assets/custom-mega/mega-barbaracle.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-barbaracle.png",
+        "source": "custom-local"
+      }
+    ],
+    "baxcalibur": [
+      {
+        "name": "Mega Baxcalibur",
+        "target": null,
+        "types": [
+          "dragon",
+          "ice"
+        ],
+        "asset": "assets/custom-mega/mega-baxcalibur.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-baxcalibur.png",
+        "source": "custom-local"
+      }
+    ],
+    "beedrill": [
+      {
+        "name": "Beedrill Mega",
+        "target": "beedrill-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "blastoise": [
+      {
+        "name": "Blastoise Mega",
+        "target": "blastoise-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "blaziken": [
+      {
+        "name": "Blaziken Mega",
+        "target": "blaziken-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "camerupt": [
+      {
+        "name": "Camerupt Mega",
+        "target": "camerupt-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "chandelure": [
+      {
+        "name": "Mega Chandelure",
+        "target": null,
+        "types": [
+          "ghost",
+          "fire"
+        ],
+        "asset": "assets/custom-mega/mega-chandelure.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-chandelure.png",
+        "source": "custom-local"
+      }
+    ],
+    "charizard": [
+      {
+        "name": "Charizard Mega X",
+        "target": "charizard-mega-x",
+        "source": "pokeapi"
+      },
+      {
+        "name": "Charizard Mega Y",
+        "target": "charizard-mega-y",
+        "source": "pokeapi"
+      }
+    ],
+    "chesnaught": [
+      {
+        "name": "Mega Chesnaught",
+        "target": null,
+        "types": [
+          "grass",
+          "fighting"
+        ],
+        "asset": "assets/custom-mega/mega-chesnaught.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-chesnaught.png",
+        "source": "custom-local"
+      }
+    ],
+    "chimecho": [
+      {
+        "name": "Mega Chimecho",
+        "target": null,
+        "types": [
+          "psychic"
+        ],
+        "asset": "assets/custom-mega/mega-chimecho.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-chimecho.png",
+        "source": "custom-local"
+      }
+    ],
+    "clefable": [
+      {
+        "name": "Mega Clefable",
+        "target": null,
+        "types": [
+          "fairy"
+        ],
+        "asset": "assets/custom-mega/mega-clefable.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-clefable.png",
+        "source": "custom-local"
+      }
+    ],
+    "crabominable": [
+      {
+        "name": "Mega Crabominable",
+        "target": null,
+        "types": [
+          "fighting",
+          "ice"
+        ],
+        "asset": "assets/custom-mega/mega-crabominable.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-crabominable.png",
+        "source": "custom-local"
+      }
+    ],
+    "darkrai": [
+      {
+        "name": "Mega Darkrai",
+        "target": null,
+        "types": [
+          "dark"
+        ],
+        "asset": "assets/custom-mega/mega-darkrai.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-darkrai.png",
+        "source": "custom-local"
+      }
+    ],
+    "delphox": [
+      {
+        "name": "Mega Delphox",
+        "target": null,
+        "types": [
+          "fire",
+          "psychic"
+        ],
+        "asset": "assets/custom-mega/mega-delphox.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-delphox.png",
+        "source": "custom-local"
+      }
+    ],
+    "diancie": [
+      {
+        "name": "Diancie Mega",
+        "target": "diancie-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "dragalge": [
+      {
+        "name": "Mega Dragalge",
+        "target": null,
+        "types": [
+          "poison",
+          "dragon"
+        ],
+        "asset": "assets/custom-mega/mega-dragalge.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-dragalge.png",
+        "source": "custom-local"
+      }
+    ],
+    "dragonite": [
+      {
+        "name": "Mega Dragonite",
+        "target": null,
+        "types": [
+          "dragon",
+          "flying"
+        ],
+        "asset": "assets/custom-mega/mega-dragonite.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-dragonite.png",
+        "source": "custom-local"
+      }
+    ],
+    "drampa": [
+      {
+        "name": "Mega Drampa",
+        "target": null,
+        "types": [
+          "normal",
+          "dragon"
+        ],
+        "asset": "assets/custom-mega/mega-drampa.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-drampa.png",
+        "source": "custom-local"
+      }
+    ],
+    "eelektross": [
+      {
+        "name": "Mega Eelektross",
+        "target": null,
+        "types": [
+          "electric"
+        ],
+        "asset": "assets/custom-mega/mega-eelektross.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-eelektross.png",
+        "source": "custom-local"
+      }
+    ],
+    "emboar": [
+      {
+        "name": "Mega Emboar",
+        "target": null,
+        "types": [
+          "fire",
+          "fighting"
+        ],
+        "asset": "assets/custom-mega/mega-emboar.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-emboar.png",
+        "source": "custom-local"
+      }
+    ],
+    "excadrill": [
+      {
+        "name": "Mega Excadrill",
+        "target": null,
+        "types": [
+          "ground",
+          "steel"
+        ],
+        "asset": "assets/custom-mega/mega-excadrill.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-excadrill.png",
+        "source": "custom-local"
+      }
+    ],
+    "falinks": [
+      {
+        "name": "Mega Falinks",
+        "target": null,
+        "types": [
+          "fighting"
+        ],
+        "asset": "assets/custom-mega/mega-falinks.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-falinks.png",
+        "source": "custom-local"
+      }
+    ],
+    "feraligatr": [
+      {
+        "name": "Mega Feraligatr",
+        "target": null,
+        "types": [
+          "water",
+          "dragon"
+        ],
+        "asset": "assets/custom-mega/mega-feraligatr.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-feraligatr.png",
+        "source": "custom-local"
+      }
+    ],
+    "floette": [
+      {
+        "name": "Mega Floette",
+        "target": null,
+        "types": [
+          "fairy"
+        ],
+        "asset": "assets/custom-mega/mega-floette.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-floette.png",
+        "source": "custom-local"
+      }
+    ],
+    "froslass": [
+      {
+        "name": "Mega Froslass",
+        "target": null,
+        "types": [
+          "ice",
+          "ghost"
+        ],
+        "asset": "assets/custom-mega/mega-froslass.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-froslass.png",
+        "source": "custom-local"
+      }
+    ],
+    "gallade": [
+      {
+        "name": "Gallade Mega",
+        "target": "gallade-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "garchomp": [
+      {
+        "name": "Garchomp Mega",
+        "target": "garchomp-mega",
+        "source": "pokeapi"
+      },
+      {
+        "name": "Mega Garchomp Z",
+        "target": null,
+        "types": [
+          "dragon"
+        ],
+        "asset": "assets/custom-mega/mega-garchomp-z.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-garchomp-z.png",
+        "source": "custom-local"
+      }
+    ],
+    "gardevoir": [
+      {
+        "name": "Gardevoir Mega",
+        "target": "gardevoir-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "gengar": [
+      {
+        "name": "Gengar Mega",
+        "target": "gengar-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "glalie": [
+      {
+        "name": "Glalie Mega",
+        "target": "glalie-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "glimmora": [
+      {
+        "name": "Mega Glimmora",
+        "target": null,
+        "types": [
+          "rock",
+          "poison"
+        ],
+        "asset": "assets/custom-mega/mega-glimmora.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-glimmora.png",
+        "source": "custom-local"
+      }
+    ],
+    "golisopod": [
+      {
+        "name": "Mega Golisopod",
+        "target": null,
+        "types": [
+          "bug",
+          "water"
+        ],
+        "asset": "assets/custom-mega/mega-golisopod.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-golisopod.png",
+        "source": "custom-local"
+      }
+    ],
+    "golurk": [
+      {
+        "name": "Mega Golurk",
+        "target": null,
+        "types": [
+          "ground",
+          "ghost"
+        ],
+        "asset": "assets/custom-mega/mega-golurk.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-golurk.png",
+        "source": "custom-local"
+      }
+    ],
+    "greninja": [
+      {
+        "name": "Mega Greninja",
+        "target": null,
+        "types": [
+          "water",
+          "dark"
+        ],
+        "asset": "assets/custom-mega/mega-greninja.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-greninja.png",
+        "source": "custom-local"
+      }
+    ],
+    "gyarados": [
+      {
+        "name": "Gyarados Mega",
+        "target": "gyarados-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "hawlucha": [
+      {
+        "name": "Mega Hawlucha",
+        "target": null,
+        "types": [
+          "fighting",
+          "flying"
+        ],
+        "asset": "assets/custom-mega/mega-hawlucha.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-hawlucha.png",
+        "source": "custom-local"
+      }
+    ],
+    "heatran": [
+      {
+        "name": "Mega Heatran",
+        "target": null,
+        "types": [
+          "fire",
+          "steel"
+        ],
+        "asset": "assets/custom-mega/mega-heatran.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-heatran.png",
+        "source": "custom-local"
+      }
+    ],
+    "heracross": [
+      {
+        "name": "Heracross Mega",
+        "target": "heracross-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "houndoom": [
+      {
+        "name": "Houndoom Mega",
+        "target": "houndoom-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "kangaskhan": [
+      {
+        "name": "Kangaskhan Mega",
+        "target": "kangaskhan-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "latias": [
+      {
+        "name": "Latias Mega",
+        "target": "latias-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "latios": [
+      {
+        "name": "Latios Mega",
+        "target": "latios-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "lopunny": [
+      {
+        "name": "Lopunny Mega",
+        "target": "lopunny-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "lucario": [
+      {
+        "name": "Lucario Mega",
+        "target": "lucario-mega",
+        "source": "pokeapi"
+      },
+      {
+        "name": "Mega Lucario Z",
+        "target": null,
+        "types": [
+          "fighting",
+          "steel"
+        ],
+        "asset": "assets/custom-mega/mega-lucario-z.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-lucario-z.png",
+        "source": "custom-local"
+      }
+    ],
+    "magearna": [
+      {
+        "name": "Mega Magearna",
+        "target": null,
+        "types": [
+          "steel",
+          "fairy"
+        ],
+        "asset": "assets/custom-mega/mega-magearna.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-magearna.png",
+        "source": "custom-local"
+      },
+      {
+        "name": "Mega Magearna Original",
+        "target": null,
+        "types": [
+          "steel",
+          "fairy"
+        ],
+        "asset": "assets/custom-mega/mega-magearna-original.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-magearna-original.png",
+        "source": "custom-local"
+      }
+    ],
+    "malamar": [
+      {
+        "name": "Mega Malamar",
+        "target": null,
+        "types": [
+          "dark",
+          "psychic"
+        ],
+        "asset": "assets/custom-mega/mega-malamar.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-malamar.png",
+        "source": "custom-local"
+      }
+    ],
+    "manectric": [
+      {
+        "name": "Manectric Mega",
+        "target": "manectric-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "mawile": [
+      {
+        "name": "Mawile Mega",
+        "target": "mawile-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "medicham": [
+      {
+        "name": "Medicham Mega",
+        "target": "medicham-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "meganium": [
+      {
+        "name": "Mega Meganium",
+        "target": null,
+        "types": [
+          "grass",
+          "fairy"
+        ],
+        "asset": "assets/custom-mega/mega-meganium.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-meganium.png",
+        "source": "custom-local"
+      }
+    ],
+    "meowstic": [
+      {
+        "name": "Mega Meowstic",
+        "target": null,
+        "types": [
+          "psychic"
+        ],
+        "asset": "assets/custom-mega/mega-meowstic.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-meowstic.png",
+        "source": "custom-local"
+      }
+    ],
+    "metagross": [
+      {
+        "name": "Metagross Mega",
+        "target": "metagross-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "mewtwo": [
+      {
+        "name": "Mewtwo Mega X",
+        "target": "mewtwo-mega-x",
+        "source": "pokeapi"
+      },
+      {
+        "name": "Mewtwo Mega Y",
+        "target": "mewtwo-mega-y",
+        "source": "pokeapi"
+      }
+    ],
+    "pidgeot": [
+      {
+        "name": "Pidgeot Mega",
+        "target": "pidgeot-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "pinsir": [
+      {
+        "name": "Pinsir Mega",
+        "target": "pinsir-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "pyroar": [
+      {
+        "name": "Mega Pyroar",
+        "target": null,
+        "types": [
+          "fire",
+          "normal"
+        ],
+        "asset": "assets/custom-mega/mega-pyroar.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-pyroar.png",
+        "source": "custom-local"
+      }
+    ],
+    "raichu": [
+      {
+        "name": "Mega Raichu X",
+        "target": null,
+        "types": [
+          "electric"
+        ],
+        "asset": "assets/custom-mega/mega-raichu-x.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-raichu-x.png",
+        "source": "custom-local"
+      },
+      {
+        "name": "Mega Raichu Y",
+        "target": null,
+        "types": [
+          "electric"
+        ],
+        "asset": "assets/custom-mega/mega-raichu-y.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-raichu-y.png",
+        "source": "custom-local"
+      }
+    ],
+    "rayquaza": [
+      {
+        "name": "Rayquaza Mega",
+        "target": "rayquaza-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "sableye": [
+      {
+        "name": "Sableye Mega",
+        "target": "sableye-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "salamence": [
+      {
+        "name": "Salamence Mega",
+        "target": "salamence-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "sceptile": [
+      {
+        "name": "Sceptile Mega",
+        "target": "sceptile-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "scizor": [
+      {
+        "name": "Scizor Mega",
+        "target": "scizor-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "scolipede": [
+      {
+        "name": "Mega Scolipede",
+        "target": null,
+        "types": [
+          "bug",
+          "poison"
+        ],
+        "asset": "assets/custom-mega/mega-scolipede.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-scolipede.png",
+        "source": "custom-local"
+      }
+    ],
+    "scovillain": [
+      {
+        "name": "Mega Scovillain",
+        "target": null,
+        "types": [
+          "grass",
+          "fire"
+        ],
+        "asset": "assets/custom-mega/mega-scovillain.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-scovillain.png",
+        "source": "custom-local"
+      }
+    ],
+    "scrafty": [
+      {
+        "name": "Mega Scrafty",
+        "target": null,
+        "types": [
+          "dark",
+          "fighting"
+        ],
+        "asset": "assets/custom-mega/mega-scrafty.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-scrafty.png",
+        "source": "custom-local"
+      }
+    ],
+    "sharpedo": [
+      {
+        "name": "Sharpedo Mega",
+        "target": "sharpedo-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "skarmory": [
+      {
+        "name": "Mega Skarmory",
+        "target": null,
+        "types": [
+          "steel",
+          "flying"
+        ],
+        "asset": "assets/custom-mega/mega-skarmory.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-skarmory.png",
+        "source": "custom-local"
+      }
+    ],
+    "slowbro": [
+      {
+        "name": "Slowbro Mega",
+        "target": "slowbro-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "staraptor": [
+      {
+        "name": "Mega Staraptor",
+        "target": null,
+        "types": [
+          "normal",
+          "flying"
+        ],
+        "asset": "assets/custom-mega/mega-staraptor.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-staraptor.png",
+        "source": "custom-local"
+      }
+    ],
+    "starmie": [
+      {
+        "name": "Mega Starmie",
+        "target": null,
+        "types": [
+          "water",
+          "psychic"
+        ],
+        "asset": "assets/custom-mega/mega-starmie.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-starmie.png",
+        "source": "custom-local"
+      }
+    ],
+    "steelix": [
+      {
+        "name": "Steelix Mega",
+        "target": "steelix-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "swampert": [
+      {
+        "name": "Swampert Mega",
+        "target": "swampert-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "tatsugiri": [
+      {
+        "name": "Mega Tatsugiri",
+        "target": null,
+        "types": [
+          "dragon",
+          "water"
+        ],
+        "asset": "assets/custom-mega/mega-tatsugiri.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-tatsugiri.png",
+        "source": "custom-local"
+      }
+    ],
+    "tyranitar": [
+      {
+        "name": "Tyranitar Mega",
+        "target": "tyranitar-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "venusaur": [
+      {
+        "name": "Venusaur Mega",
+        "target": "venusaur-mega",
+        "source": "pokeapi"
+      }
+    ],
+    "victreebel": [
+      {
+        "name": "Mega Victreebel",
+        "target": null,
+        "types": [
+          "grass",
+          "poison"
+        ],
+        "asset": "assets/custom-mega/mega-victreebel.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-victreebel.png",
+        "source": "custom-local"
+      }
+    ],
+    "zeraora": [
+      {
+        "name": "Mega Zeraora",
+        "target": null,
+        "types": [
+          "electric"
+        ],
+        "asset": "assets/custom-mega/mega-zeraora.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-zeraora.png",
+        "source": "custom-local"
+      }
+    ],
+    "zygarde": [
+      {
+        "name": "Mega Zygarde",
+        "target": null,
+        "types": [
+          "dragon",
+          "ground"
+        ],
+        "asset": "assets/custom-mega/mega-zygarde.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-zygarde.png",
+        "source": "custom-local"
+      }
+    ],
+    "zygarde-complete": [
+      {
+        "name": "Mega Zygarde Complete",
+        "target": null,
+        "types": [
+          "dragon",
+          "ground"
+        ],
+        "asset": "assets/custom-mega/mega-zygarde-complete.png",
+        "shinyAsset": "assets/custom-mega/shiny/mega-zygarde-complete.png",
+        "source": "custom-local"
+      }
+    ]
+  },
+  "audit": {
+    "method": "Manual audit pass because PokeAPI network access was unavailable in the sandbox. Checked against all generational families, special split cases, and regional form evolution cases.",
+    "majorFixesAdded": [
+      "Alolan regional evolutions",
+      "Galarian regional evolutions",
+      "Hisuian regional evolutions",
+      "Paldean Wooper and Gimmighoul forms",
+      "Gen 9 DLC evolutions: Dipplin -> Hydrapple, Duraludon -> Archaludon, Poltchageist -> Sinistcha",
+      "Poipole -> Naganadel",
+      "Corrected regional-only evolutions: base Farfetch'd, Corsola, Qwilfish, and Basculin no longer evolve into regional-only evolutions",
+      "Added split choices for Petilil, Rufflet, Bergmite, Dartrix, Quilava, Dewott, Scyther, Goomy, Mime Jr., Exeggcute, Cubone, Koffing, Espurr, Burmy"
+    ],
+    "remainingDesignNotes": [
+      "Some split choices are region-context choices made available to the player for fun, even where official games require being in a specific region.",
+      "Evolution Stone uses only normalEvolutions, splitEvolutions and formUpgrades.",
+      "Mega evolutions and special quest transformations remain intentionally excluded from Evolution Stone behavior."
+    ],
+    "v1_1_1_patch": [
+      "Added missing Tyrunt -> Tyrantrum.",
+      "Added missing Amaura -> Aurorus.",
+      "Added Pokémon endpoint aliases so species-form names like Giratina resolve to valid PokéAPI Pokémon endpoints."
+    ]
+  }
+}
