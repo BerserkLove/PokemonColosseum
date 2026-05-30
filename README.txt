@@ -667,3 +667,107 @@ v13.5.4 No Score Reveal Text
 - Removed the redundant score summary sentence from the league result section.
 - Kept the action buttons, Quest Bonus box, Team Concept, battle simulation, certificate and detailed team cards.
 - Score remains visible in the top Visible Score card and in the Score Breakdown modal.
+
+v13.5.5 Collection Concepts Locked Names
+- Collection Log Concepts now show all known concept names even while locked.
+- Locked concepts stay greyed out and marked with a lock.
+- Locked concept details remain hidden until the concept is triggered in a run.
+- Other Collection Log sections keep the old hidden "???" behavior for locked entries.
+
+v13.5.6 Collection Concept Hints
+- Locked Collection Log concept entries now show an unlock hint.
+- The concept name remains visible while locked.
+- Detailed discovered meta/reward text still appears only after the concept has been triggered in a run.
+- Other Collection Log sections remain unchanged.
+
+v13.5.7 Concept Expansion Pack
+- Added 10 new team concepts:
+  Lake Guardian Team, Eevee Ensemble, Royal Court, Ancient Kings, Artificial Lifeforms,
+  Cosmic Visitors, Nightmare Team, Partner Power, Loyal Three, Legendary Wings.
+- Added locked Collection Log names and hints for all new concepts.
+- No quest, item, trainer, battle simulation, certificate or PokéMart flow changed.
+
+v13.5.8 Quest Expansion Pack
+- Lake Guardian Team concept changed to flat +500.
+- Added quest expansion: Mew Project, Dream Duo, Lake Guardians: Mind/Emotion/Will, Darkest Day, Treasures Unsealed, Type: Full Memory, The Power of One, Sacred Fire.
+- Treasures Unsealed awards +1000 active difficulty coins immediately when completed.
+- Type: Full Memory changes Silvally's active type to the selected Elemental Plate type and grants +300 quest points.
+- Lake Guardians quest grants no points; it opens a creation rift for next draft option or final replacement.
+
+v13.5.9 Lake Guardian Rift Fix
+- Fixed Lake Guardians: Mind, Emotion, Will rift timing.
+- If the third Lake Guardian is picked as Pokémon #6, post-draft checks are paused and the replacement modal opens first.
+- Player can replace one non-Lake Guardian with random Dialga/Palkia/Giratina or skip.
+- If the trio completes before pick 6, the next/current draft options receive the guaranteed creation dragon immediately.
+
+v13.5.10 Lake Guardian Pending Rift Fix
+- Fixed Lake Guardians rift being consumed by stale draft options.
+- If an item/quest modal interrupts option generation, the rift stays pending.
+- Dialga/Palkia/Giratina is injected only into fresh draft options.
+- Added re-checks after Evolution Stone, Rainbow Feather and closing item modals.
+
+v13.5.11 Heavy Quest Items
+- Added Starting Items: Colress Machine and Hero Relics with item sprites.
+- Colress Machine guarantees Necrozma in the next draft and strongly boosts Solgaleo/Lunala appearance odds.
+- Hero Relics guarantees Zacian or Zamazenta in the next draft and strongly boosts the other hero.
+- Hero Relics can transform Zacian into Crowned Sword and Zamazenta into Crowned Shield using upgraded 720 BST stats.
+- Darkest Day now counts Crowned Sword and Crowned Shield.
+- Lake Guardian Rift Pokémon now receive a visible "Lake Guardian Rift opened" label.
+
+v13.5.12 Heavy Item Labels + Crowned Sprites
+- Draft labels for guaranteed heavy-item Pokémon are now specific:
+  Colress Machine: guaranteed Necrozma
+  Hero Relics: guaranteed Zacian
+  Hero Relics: guaranteed Zamazenta
+- Crowned Zacian and Crowned Zamazenta now use custom uploaded sprites:
+  assets/special/Zacian_CrownedSword.png
+  assets/special/Zamazenta_CrownedShield.png
+- Necrozma Dusk Mane and Dawn Wings sprites were copied for later mechanics:
+  assets/special/Necrozma_Dusk_Mane.png
+  assets/special/Necrozma_Dawn_Wings.png
+
+v13.5.14 Hero Relics Immediate + Legendary Heroes
+- Draft option cards now show specific heavy-item guarantee labels:
+  Colress Machine: guaranteed Necrozma
+  Hero Relics: guaranteed Zacian / Zamazenta
+- Hero Relics now crowns Zacian/Zamazenta immediately during draft selection.
+- Crowned forms now display a calculated "Hero awakened: +X" label explaining the score jump.
+- Added Legendary Heroes quest: Crowned Sword + Crowned Shield = +300 points.
+
+v13.5.15 Hero Relics Double Awakening Fix
+- Fixed Hero Relics only awakening one hero.
+- If Zacian or Zamazenta appears later in the same run, Hero Relics now crowns that hero too.
+- Broadened Zacian/Zamazenta detection to catch base, hero and crowned internal names.
+- Added render-time safety pass so an already drafted un-crowned hero is corrected.
+
+v13.5.16 Necrozma Twilight
+- Added Necrozma Twilight hidden quest.
+- Necrozma can fuse with Solgaleo into Dusk Mane Necrozma or Lunala into Dawn Wings Necrozma.
+- Fusion opens one team slot, mirrors DNA Splicers behavior, and grants +300 quest bonus.
+- Fused Necrozma uses the uploaded Dusk Mane / Dawn Wings sprites.
+- Fused Necrozma has +80 Twilight fusion power visible on cards and result details.
+- Colress Machine is only a helper; natural Necrozma + Solgaleo/Lunala also triggers the quest.
+
+v13.5.17 Necrozma Twilight Immediate Fix
+- Fixed Necrozma Twilight only triggering at the end of the run.
+- After every pick, the game now checks whether Necrozma + Solgaleo/Lunala are both selected.
+- If the pair exists, the fusion modal opens immediately before the run continues.
+- Post-draft hidden quest behavior remains as a fallback.
+
+v13.5.18 Battle Reward Coins
+- Added battle reward coins based on League progress.
+- Easy: Gym +5 each, Elite Four +10 each, Champion +100, Legendary Trainer +500.
+- Normal: Gym +10 each, Elite Four +20 each, Champion +200, Legendary Trainer +750.
+- Master: Gym +20 each, Elite Four +40 each, Champion +400, Legendary Trainer +1000.
+- Rewards are added to the matching difficulty coin pouch and protected against duplicate payouts per run.
+- Existing 10% final-score coin payout remains unchanged; battle rewards are additional.
+
+v13.5.20 Quest Locked Names Direct Fix
+- Locked quests show quest names instead of ???.
+- Locked quest descriptions remain hidden as Quest details locked.
+
+v13.5.21 Quest Names Actual Renderer Fix
+- Fixed the actual Collection Log renderer used by the locked concept system.
+- Locked quests now reveal quest names.
+- Locked quest details show "Quest details locked".
+- Locked concepts keep their hints.

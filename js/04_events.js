@@ -23,7 +23,7 @@ function renderResults(area,title,res){
   </div>
 
   <div class="revealteam">
-   ${team.map((p,i)=>`<div class="reveal ${p.shiny?'shiny':''}"><img src="${currentSprite(p,i)||''}"><div><div class="tname">${i+1}. ${p.shiny?'✨ ':''}${activePokemonName(p,i)}</div><div class="tscore">${lightBallAppliesTo(i)?scoreBaseFor(p,i):scoreBaseDisplayFor(p,i)} BST${lightBallAppliesTo(i)?` (${lightBallEffectText(p,i)})`:""}${p.activeUnbound?` as ${p.activeUnbound.name}`:""}${selectedMegaIndex===i&&p.activeMega?` → ${p.activeMega.scoreBst} as ${p.activeMega.name}`:""}${p.shiny?` + ${SHINY_BONUS} shiny bonus`:""}${p.eternalBonus?` + ${p.eternalBonus} Eternal Flower bonus`:""}${p.extraShinyBonus?` + ${p.extraShinyBonus} second shiny bonus`:""}${p.name==="arceus"&&arceusPlateBonus()?` +300 Arceus Plate quest`:""}${p.activePrimal?` → ${p.activePrimal.scoreBst} as ${p.activePrimal.name}`:""}${p.fusedWith?` + DNA fusion with ${pretty(p.fusedWith)}`:""}${selectedItem&&selectedItem.id==="elemental_plate"&&elementalPlateType&&activeTypes(p,i).map(t=>t.toLowerCase()).includes(elementalPlateType)?` +50 ${elementalPlateType} plate`:""}</div><div class="types" style="margin-top:6px">${activeTypes(p,i).map(typePill).join("")}</div>${pokemonItemBadges(p,i)}${pokemonSpecialBadges(p)}</div><div class="rscore">${pScore(p,i)}</div></div>`).join("")}
+   ${team.map((p,i)=>`<div class="reveal ${p.shiny?'shiny':''}"><img src="${currentSprite(p,i)||''}"><div><div class="tname">${i+1}. ${p.shiny?'✨ ':''}${activePokemonName(p,i)}</div><div class="tscore">${lightBallAppliesTo(i)?scoreBaseFor(p,i):scoreBaseDisplayFor(p,i)} BST${lightBallAppliesTo(i)?` (${lightBallEffectText(p,i)})`:""}${p.activeUnbound?` as ${p.activeUnbound.name}`:""}${selectedMegaIndex===i&&p.activeMega?` → ${p.activeMega.scoreBst} as ${p.activeMega.name}`:""}${p.shiny?` + ${SHINY_BONUS} shiny bonus`:""}${p.eternalBonus?` + ${p.eternalBonus} Eternal Flower bonus`:""}${p.extraShinyBonus?` + ${p.extraShinyBonus} second shiny bonus`:""}${p.name==="arceus"&&arceusPlateBonus()?` +300 Arceus Plate quest`:""}${p.activePrimal?` → ${p.activePrimal.scoreBst} as ${p.activePrimal.name}`:""}${p.necrozmaTwilightFusion?` → ${p.necrozmaTwilightScoreBst||scoreBaseFor(p,i)} as ${p.displayName} +${p.necrozmaTwilightBonus||80} Twilight fusion power`:p.fusedWith?` + DNA fusion with ${pretty(p.fusedWith)}`:""}${selectedItem&&selectedItem.id==="elemental_plate"&&elementalPlateType&&activeTypes(p,i).map(t=>t.toLowerCase()).includes(elementalPlateType)?` +50 ${elementalPlateType} plate`:""}</div><div class="types" style="margin-top:6px">${activeTypes(p,i).map(typePill).join("")}</div>${pokemonItemBadges(p,i)}${pokemonSpecialBadges(p)}</div><div class="rscore">${pScore(p,i)}</div></div>`).join("")}
   </div>
 
   ${eventLog?`<h3 style="font-size:24px;font-weight:1000;margin:20px 0 10px">Draft Event</h3><div class="battle ${eventLog.won?'win':'loss'}"><div class="trainerrow">${imgTag(eventLog.grunt)}<div><div class="label">Grunt Encounter</div><div class="name" style="font-size:16px">${eventLog.grunt.name}</div><div class="tscore">${eventLog.won?`Protected the team. ${eventLog.orbHint||""}`:`Lost ${eventLog.stolen?eventLog.stolen.displayName:"a Pokémon"}.`}${renderOpponentTeam(eventLog.team)}</div></div><div class="result ${eventLog.won?'win':'loss'}">${eventLog.won?'Win':'Loss'}</div></div></div>`:""}
@@ -126,7 +126,7 @@ function recordCollectionFromRun(entry){
  saveCollectionLog(log);
 }
 function collectionQuestCatalog(){
- const base=(typeof QUEST_CATALOG!=="undefined"?QUEST_CATALOG:[]).map(q=>({key:q.name,name:q.name,meta:q.rarity||"Quest"}));
+ const base=(typeof QUEST_CATALOG!=="undefined"?QUEST_CATALOG:[]).map(q=>({key:q.name,name:q.name,meta:q.rarity||"Quest",lockedMeta:"Quest details locked",revealLockedName:true}));
  const discovered=Object.values(getCollectionLog().quests||{}).map(x=>({key:x.key||x.name,name:x.name||x.key,meta:x.meta||"Discovered"}));
  return mergeCollectionCatalog(base,discovered);
 }
@@ -203,7 +203,7 @@ function collectionEntryHtml(item,foundMap){
  const data=got?foundMap[item.key]:null;
  const sprite=(data&&data.sprite)||item.sprite||"";
  const meta=(data&&data.meta)||item.meta||"Undiscovered";
- return `<div class="collectionEntry ${got?"":"locked"}"><div class="collectionIcon">${sprite?`<img src="${sprite}" onerror="this.style.display='none'">`:(got?"✓":"?")}</div><div><div class="collectionName">${got?(data.name||item.name):"???"}</div><div class="collectionMeta">${got?meta:"Not discovered yet"}</div></div><div class="collectionPill">${got?"Seen":"Locked"}</div></div>`;
+ return `<div class="collectionEntry ${got?"":"locked"}"><div class="collectionIcon">${sprite?`<img src="${sprite}" onerror="this.style.display=\'none\'">`:(got?"✓":(item.revealLockedName?"🔒":"?"))}</div><div><div class="collectionName">${got?(data.name||item.name):(item.revealLockedName?(item.name||item.key):"???")}</div><div class="collectionMeta">${got?meta:(item.revealLockedName?(item.lockedMeta||"Quest details locked"):"Not discovered yet")}</div></div><div class="collectionPill">${got?"Seen":"Locked"}</div></div>`;
 }
 
 function syncCollectionFromHistory(){
@@ -2855,6 +2855,1388 @@ renderResults=function(area,title,res){
   const p=[...box.querySelectorAll("p.tscore")].find(x=>(x.textContent||"").includes("Team score:")&&(x.textContent||"").includes("Final League Power:"));
   if(p)p.remove();
  }
+};
+
+
+/* ===== v13.5.5 Collection Concepts Locked Names ===== */
+collectionEntryHtmlV1355=function(item,foundMap,sectionId){
+ const got=!!(foundMap&&foundMap[item.key]);
+ const data=got?foundMap[item.key]:null;
+ const sprite=(data&&data.sprite)||item.sprite||"";
+ const meta=(data&&data.meta)||item.meta||"Undiscovered";
+ const revealLockedName=sectionId==="concepts"||sectionId==="quests";
+ const shownName=got?(data.name||item.name):(revealLockedName?item.name:"???");
+ const shownMeta=got?meta:(sectionId==="quests"?"Quest details locked":(revealLockedName?"Locked concept. Trigger it in a run to reveal details.":"Not discovered yet"));
+ const icon=sprite?`<img src="${sprite}" onerror="this.style.display='none'">`:(got?"✓":(revealLockedName?"🔒":"?"));
+ const cls=`collectionEntry ${got?"":"locked"} ${(!got&&revealLockedName)?"conceptLocked":""}`;
+ return `<div class="${cls}"><div class="collectionIcon">${icon}</div><div><div class="collectionName">${shownName}</div><div class="collectionMeta">${shownMeta}</div></div><div class="collectionPill">${got?"Seen":"Locked"}</div></div>`;
+};
+
+renderCollectionPage=function(){
+ const progress=document.getElementById("collectionProgress");
+ const content=document.getElementById("collectionContent");
+ if(!progress||!content)return;
+ const t=collectionTotals();
+ progress.innerHTML=`<div><div class="collectionPercent">${t.percent}%</div><div class="collectionMeta">${t.found} / ${t.total} entries discovered</div></div><div><div class="collectionBar"><span style="width:${t.percent}%"></span></div><div class="collectionMeta" style="margin-top:8px">Completion Tracker updates automatically when new catalog entries or discoveries are added.</div></div>`;
+ content.innerHTML=collectionSections().map(sec=>{
+  const keys=new Set(sec.catalog.map(x=>x.key));
+  Object.keys(sec.found||{}).forEach(k=>keys.add(k));
+  const catalog=[...keys].map(k=>sec.catalog.find(x=>x.key===k)||{key:k,name:(sec.found[k]&&sec.found[k].name)||k,meta:(sec.found[k]&&sec.found[k].meta)||"Discovered",sprite:(sec.found[k]&&sec.found[k].sprite)||""});
+  const foundCount=catalog.filter(x=>sec.found&&sec.found[x.key]).length;
+  return `<section class="collectionSection"><h3><span>${sec.emoji}</span>${sec.title}<span class="collectionPill">${foundCount}/${catalog.length}</span></h3>${collectionQuoteHtml(sec.quote)}<div class="collectionList">${catalog.length?catalog.map(x=>collectionEntryHtmlV1355(x,sec.found,sec.id)).join(""):`<div class="collectionEmpty">No entries yet. Complete runs to discover this section.</div>`}</div></section>`;
+ }).join("");
+};
+
+
+/* ===== v13.5.6 Collection Concept Unlock Hints ===== */
+const COLLECTION_CONCEPT_HINTS_V1356={
+ "Bond Phenomenon Team":"Hint: Draft Ash-Greninja together with a Cap Pikachu.",
+ "Alola Protector Team":"Hint: Assemble all four Tapu guardians.",
+ "All Legendary Team":"Hint: Fill the entire team with legendary or mythical Pokémon.",
+ "Ultra Beast Containment Unit":"Hint: Draft at least 3 Ultra Beasts.",
+ "Regi Seal Team":"Hint: Draft at least 3 Regi Pokémon.",
+ "Paradox Rift Team":"Hint: Draft at least 3 Ancient/Future Paradox Pokémon.",
+ "Starter Squad":"Hint: Draft at least 3 Pokémon from starter families.",
+ "Forces of Nature Team":"Hint: Draft at least 3 Forces of Nature Pokémon.",
+ "Clone Army":"Hint: Draft at least 3 clone Pokémon.",
+ "A World Before Our Time":"Hint: Draft at least 3 fossil Pokémon.",
+ "Pikachu Parade":"Hint: Draft at least 2 Pikachu variants.",
+ "Anime Legends Team":"Hint: Draft anime/event-related special Pokémon.",
+ "Pay Day":"Hint: Draft at least 2 coin-themed Pokémon.",
+ "Kitty Dream":"Hint: Draft at least 3 cat-like Pokémon.",
+ "Almost Legendary":"Hint: Draft at least 3 pseudo-legendary family Pokémon.",
+ "Myth Cabinet":"Hint: Draft several mythical/legendary-tier Pokémon.",
+ "Dog Park":"Hint: Draft at least 3 dog-like Pokémon.",
+ "Horse Stable":"Hint: Draft at least 3 horse-like Pokémon.",
+ "Baby Daycare":"Hint: Draft at least 3 baby Pokémon.",
+ "Grunt Squad":"Hint: Draft Pokémon with evil-team style typings.",
+ "Shiny Showcase":"Hint: Draft multiple shiny Pokémon.",
+ "Illegal Power Stack":"Hint: Combine Mega Evolution with multiple legendary threats.",
+ "Kanto Team":"Hint: Draft at least 3 Pokémon from Kanto.",
+ "Johto Team":"Hint: Draft at least 3 Pokémon from Johto.",
+ "Hoenn Team":"Hint: Draft at least 3 Pokémon from Hoenn.",
+ "Sinnoh Team":"Hint: Draft at least 3 Pokémon from Sinnoh.",
+ "Unova Team":"Hint: Draft at least 3 Pokémon from Unova.",
+ "Kalos Team":"Hint: Draft at least 3 Pokémon from Kalos.",
+ "Alola Team":"Hint: Draft at least 3 Pokémon from Alola.",
+ "Galar Team":"Hint: Draft at least 3 Pokémon from Galar.",
+ "Paldea Team":"Hint: Draft at least 3 Pokémon from Paldea.",
+ "Normal Core":"Hint: Draft at least 3 Normal-type Pokémon.",
+ "Fire Core":"Hint: Draft at least 3 Fire-type Pokémon.",
+ "Water Core":"Hint: Draft at least 3 Water-type Pokémon.",
+ "Electric Core":"Hint: Draft at least 3 Electric-type Pokémon.",
+ "Grass Core":"Hint: Draft at least 3 Grass-type Pokémon.",
+ "Ice Core":"Hint: Draft at least 3 Ice-type Pokémon.",
+ "Fighting Core":"Hint: Draft at least 3 Fighting-type Pokémon.",
+ "Poison Core":"Hint: Draft at least 3 Poison-type Pokémon.",
+ "Ground Core":"Hint: Draft at least 3 Ground-type Pokémon.",
+ "Flying Core":"Hint: Draft at least 3 Flying-type Pokémon.",
+ "Psychic Core":"Hint: Draft at least 3 Psychic-type Pokémon.",
+ "Bug Core":"Hint: Draft at least 3 Bug-type Pokémon.",
+ "Rock Core":"Hint: Draft at least 3 Rock-type Pokémon.",
+ "Ghost Core":"Hint: Draft at least 3 Ghost-type Pokémon.",
+ "Dragon Core":"Hint: Draft at least 3 Dragon-type Pokémon.",
+ "Dark Core":"Hint: Draft at least 3 Dark-type Pokémon.",
+ "Steel Core":"Hint: Draft at least 3 Steel-type Pokémon.",
+ "Fairy Core":"Hint: Draft at least 3 Fairy-type Pokémon."
+};
+
+const __collectionConceptCatalog_hints_v1356=collectionConceptCatalog;
+collectionConceptCatalog=function(){
+ return __collectionConceptCatalog_hints_v1356().map(x=>({
+  ...x,
+  hint:COLLECTION_CONCEPT_HINTS_V1356[x.name]||COLLECTION_CONCEPT_HINTS_V1356[x.key]||"Hint: Discover the team pattern during a run."
+ }));
+};
+
+collectionEntryHtmlV1355=function(item,foundMap,sectionId){
+ const got=!!(foundMap&&foundMap[item.key]);
+ const data=got?foundMap[item.key]:null;
+ const sprite=(data&&data.sprite)||item.sprite||"";
+ const meta=(data&&data.meta)||item.meta||"Undiscovered";
+ const revealLockedName=sectionId==="concepts"||sectionId==="quests";
+ const shownName=got?(data.name||item.name):(revealLockedName?item.name:"???");
+ const shownMeta=got?meta:(sectionId==="quests"?"Quest details locked":(revealLockedName?(item.hint||"Hint: Discover the team pattern during a run."):"Not discovered yet"));
+ const icon=sprite?`<img src="${sprite}" onerror="this.style.display='none'">`:(got?"✓":(revealLockedName?"🔒":"?"));
+ const cls=`collectionEntry ${got?"":"locked"} ${(!got&&revealLockedName)?"conceptLocked":""}`;
+ return `<div class="${cls}"><div class="collectionIcon">${icon}</div><div><div class="collectionName">${shownName}</div><div class="collectionMeta">${shownMeta}</div></div><div class="collectionPill">${got?"Seen":"Locked"}</div></div>`;
+};
+
+
+/* ===== v13.5.7 Concept Expansion Pack ===== */
+const LAKE_GUARDIAN_SET_V1357=new Set(["uxie","mesprit","azelf"]);
+const EEVEE_FAMILY_V1357=new Set(["eevee","partner-eevee","vaporeon","jolteon","flareon","espeon","umbreon","leafeon","glaceon","sylveon"]);
+const ROYAL_POKEMON_V1357=new Set(["kingambit","slowking","slowking-galar","nidoking","nidoqueen","tsareena","slaking","serperior","empoleon","vespiquen","calyrex","zacian","zamazenta","aegislash","aegislash-shield","aegislash-blade","pyroar","pyroar-male","pyroar-female"]);
+const ANCIENT_KINGS_V1357=new Set(["regigigas","golett","golurk","baltoy","claydol","bronzor","bronzong","sigilyph","relicanth","unown","mamoswine","piloswine","swinub","yamask","yamask-galar","cofagrigus","runerigus","stonjourner","spiritomb"]);
+const ARTIFICIAL_POKEMON_V1357=new Set(["porygon","porygon2","porygon-z","mewtwo","shadow-mewtwo","armored-mewtwo","genesect","type-null","silvally","magearna","golett","golurk","baltoy","claydol","voltorb","electrode","voltorb-hisui","electrode-hisui","castform"]);
+const COSMIC_VISITORS_V1357=new Set(["deoxys","deoxys-normal","deoxys-attack","deoxys-defense","deoxys-speed","cleffa","clefairy","clefable","lunatone","solrock","minior","minior-red-meteor","minior-orange-meteor","minior-yellow-meteor","minior-green-meteor","minior-blue-meteor","minior-indigo-meteor","minior-violet-meteor","staryu","starmie","necrozma","cosmog","cosmoem","solgaleo","lunala","elgyem","beheeyem","eternatus","jirachi"]);
+const NIGHTMARE_POKEMON_V1357=new Set(["darkrai","munna","musharna","drowzee","hypno","gastly","haunter","gengar","gengar-mega","mimikyu","mimikyu-disguised","mimikyu-busted","shuppet","banette","banette-mega","spiritomb"]);
+const LOYAL_THREE_V1357=new Set(["okidogi","munkidori","fezandipiti"]);
+const LEGENDARY_WINGS_V1357=new Set(["lugia","shadow-lugia","ho-oh","articuno","zapdos","moltres","articuno-galar","zapdos-galar","moltres-galar","galarian-articuno","galarian-zapdos","galarian-moltres"]);
+
+function normConceptKeyV1357(x){
+ return String(x||"").toLowerCase().replace(/♀/g,"-f").replace(/♂/g,"-m").replace(/_/g,"-").replace(/\s+/g,"-").replace(/[^a-z0-9-]+/g,"-").replace(/^-+|-+$/g,"");
+}
+function conceptKeysForPokemonV1357(p,i=0){
+ const vals=[p&&p.name,p&&p.displayName,p&&p.baseName,p&&p.baseSpecies,p&&p.base,p&&p.specialId];
+ try{vals.push(baseSpeciesName(p));}catch(e){}
+ try{vals.push(specialBaseKey(p));}catch(e){}
+ if(p&&p.activeMega){vals.push(p.activeMega.name,p.activeMega.source);}
+ if(p&&p.activeOrigin){vals.push(p.activeOrigin.name);}
+ if(p&&p.activeUnbound){vals.push(p.activeUnbound.name);}
+ return [...new Set(vals.map(normConceptKeyV1357).filter(Boolean))];
+}
+function pokemonMatchesConceptSetV1357(p,set,i=0){
+ const keys=conceptKeysForPokemonV1357(p,i);
+ return keys.some(k=>set.has(k));
+}
+function countConceptSetV1357(set){
+ return team.filter((p,i)=>pokemonMatchesConceptSetV1357(p,set,i)).length;
+}
+function hasAllConceptSetV1357(set){
+ const allKeys=team.flatMap((p,i)=>conceptKeysForPokemonV1357(p,i));
+ const keySet=new Set(allKeys);
+ return [...set].every(k=>keySet.has(k));
+}
+function countAncientKingsV1357(){
+ return team.filter((p,i)=>isFossilPokemon(p)||pokemonMatchesConceptSetV1357(p,ANCIENT_KINGS_V1357,i)).length;
+}
+function countArtificialV1357(){
+ return team.filter((p,i)=>{
+  if(pokemonMatchesConceptSetV1357(p,ARTIFICIAL_POKEMON_V1357,i))return true;
+  const base=conceptKeysForPokemonV1357(p,i);
+  return base.some(k=>typeof FUTURE_PARADOX!=="undefined"&&FUTURE_PARADOX.has(k));
+ }).length;
+}
+
+const __teamConcept_expansion_v1357=teamConcept;
+teamConcept=function(){
+ if(team.length<ROUNDS)return {key:"unfinished",name:"Unfinished Team",bonus:0,reason:"Draft still in progress."};
+ const extraCandidates=[];
+ const add=(key,name,bonus,reason)=>extraCandidates.push({key,name,bonus,reason});
+ const lake=countConceptSetV1357(LAKE_GUARDIAN_SET_V1357);
+ const eevee=countConceptSetV1357(EEVEE_FAMILY_V1357);
+ const royal=countConceptSetV1357(ROYAL_POKEMON_V1357);
+ const ancient=countAncientKingsV1357();
+ const artificial=countArtificialV1357();
+ const cosmic=countConceptSetV1357(COSMIC_VISITORS_V1357);
+ const nightmare=countConceptSetV1357(NIGHTMARE_POKEMON_V1357);
+ const loyal=countConceptSetV1357(LOYAL_THREE_V1357);
+ const wings=countConceptSetV1357(LEGENDARY_WINGS_V1357);
+ const partnerPika=team.some((p,i)=>conceptKeysForPokemonV1357(p,i).some(k=>k==="partner-pikachu"));
+ const partnerEevee=team.some((p,i)=>conceptKeysForPokemonV1357(p,i).some(k=>k==="partner-eevee"));
+ const hasDarkrai=team.some((p,i)=>conceptKeysForPokemonV1357(p,i).includes("darkrai"));
+ if(lake===3)add("lake_guardian_team","Lake Guardian Team",300,"Uxie, Mesprit and Azelf united. +300 bonus.");
+ if(eevee>=3)add("eevee_ensemble","Eevee Ensemble",eevee*75,`${eevee} Eevee-family Pokémon selected. +75 each.`);
+ if(royal>=3)add("royal_court","Royal Court",royal*100,`${royal} royal or noble Pokémon selected. +100 each.`);
+ if(ancient>=3)add("ancient_kings","Ancient Kings",ancient*100,`${ancient} ancient, fossil or relic Pokémon selected. +100 each.`);
+ if(artificial>=3)add("artificial_lifeforms","Artificial Lifeforms",artificial*100,`${artificial} artificial or man-made Pokémon selected. +100 each.`);
+ if(cosmic>=3)add("cosmic_visitors","Cosmic Visitors",cosmic*100,`${cosmic} cosmic or space-linked Pokémon selected. +100 each.`);
+ if(hasDarkrai&&nightmare>=3)add("nightmare_team","Nightmare Team",nightmare*100,`Darkrai gathered ${nightmare-1} nightmare allies. +100 per nightmare Pokémon.`);
+ if(partnerPika&&partnerEevee)add("partner_power","Partner Power",300,"Partner Pikachu and Partner Eevee joined forces. +300 bonus.");
+ if(loyal===3)add("loyal_three","Loyal Three",300,"Okidogi, Munkidori and Fezandipiti assembled. +300 bonus.");
+ if(wings>=3)add("legendary_wings","Legendary Wings",wings*100,`${wings} legendary bird Pokémon selected. +100 each.`);
+ const original=__teamConcept_expansion_v1357();
+ const candidates=[...extraCandidates];
+ if(original&&original.key!=="random"&&original.key!=="unfinished")candidates.push(original);
+ if(!candidates.length)return original;
+ const max=Math.max(...candidates.map(c=>c.bonus||0));
+ const winners=candidates.filter(c=>(c.bonus||0)===max);
+ return winners[Math.floor(Math.random()*winners.length)];
+};
+
+const __collectionConceptCatalog_expansion_v1357=collectionConceptCatalog;
+collectionConceptCatalog=function(){
+ const additions=[
+  ["Lake Guardian Team","Hint: Draft Uxie, Mesprit and Azelf."],
+  ["Eevee Ensemble","Hint: Draft at least 3 Eevee-family Pokémon."],
+  ["Royal Court","Hint: Draft at least 3 royal or noble Pokémon."],
+  ["Ancient Kings","Hint: Draft at least 3 fossil, ancient or relic Pokémon."],
+  ["Artificial Lifeforms","Hint: Draft at least 3 artificial or man-made Pokémon."],
+  ["Cosmic Visitors","Hint: Draft at least 3 space or cosmic Pokémon."],
+  ["Nightmare Team","Hint: Draft Darkrai together with 2 nightmare/dream Pokémon."],
+  ["Partner Power","Hint: Draft Partner Pikachu and Partner Eevee together."],
+  ["Loyal Three","Hint: Draft Okidogi, Munkidori and Fezandipiti."],
+  ["Legendary Wings","Hint: Draft at least 3 legendary bird Pokémon."]
+ ];
+ const base=__collectionConceptCatalog_expansion_v1357();
+ const seen=new Set(base.map(x=>x.name||x.key));
+ additions.forEach(([name,hint])=>{
+  if(!seen.has(name))base.push({key:name,name,meta:"Team concept",hint});
+ });
+ return base.map(x=>({
+  ...x,
+  hint:(additions.find(a=>a[0]===(x.name||x.key))||[])[1]||x.hint
+ }));
+};
+
+if(typeof COLLECTION_CONCEPT_HINTS_V1356!=="undefined"){
+ Object.assign(COLLECTION_CONCEPT_HINTS_V1356,{
+  "Lake Guardian Team":"Hint: Draft Uxie, Mesprit and Azelf.",
+  "Eevee Ensemble":"Hint: Draft at least 3 Eevee-family Pokémon.",
+  "Royal Court":"Hint: Draft at least 3 royal or noble Pokémon.",
+  "Ancient Kings":"Hint: Draft at least 3 fossil, ancient or relic Pokémon.",
+  "Artificial Lifeforms":"Hint: Draft at least 3 artificial or man-made Pokémon.",
+  "Cosmic Visitors":"Hint: Draft at least 3 space or cosmic Pokémon.",
+  "Nightmare Team":"Hint: Draft Darkrai together with 2 nightmare/dream Pokémon.",
+  "Partner Power":"Hint: Draft Partner Pikachu and Partner Eevee together.",
+  "Loyal Three":"Hint: Draft Okidogi, Munkidori and Fezandipiti.",
+  "Legendary Wings":"Hint: Draft at least 3 legendary bird Pokémon."
+ });
+}
+
+
+/* ===== v13.5.8 Quest Expansion Pack ===== */
+let lakeGuardianGuaranteeNextV1358=false;
+let lakeGuardianReplacementOpenV1358=false;
+let lakeGuardianRewardResolvedV1358=false;
+let treasuresUnsealedCoinsAwardedV1358=false;
+let completedQuestEventsV1358=new Set();
+
+const TREASURES_OF_RUIN_V1358=new Set(["chien-pao","ting-lu","wo-chien","chi-yu"]);
+const SACRED_FIRE_SET_V1358=new Set(["ho-oh","entei","suicune","raikou"]);
+const CREATION_DRAGON_POOL_V1358=["dialga","palkia","giratina"];
+const POWER_OF_ONE_GROUPS_V1358={
+ lugia:new Set(["lugia","shadow-lugia"]),
+ articuno:new Set(["articuno","articuno-galar","galarian-articuno"]),
+ zapdos:new Set(["zapdos","zapdos-galar","galarian-zapdos"]),
+ moltres:new Set(["moltres","moltres-galar","galarian-moltres"])
+};
+
+function questKeyV1358(x){return String(x||"").toLowerCase().replace(/♀/g,"-f").replace(/♂/g,"-m").replace(/_/g,"-").replace(/\s+/g,"-").replace(/[^a-z0-9-]+/g,"-").replace(/^-+|-+$/g,"")}
+function keysForPokemonV1358(p,i=0){
+ const vals=[p&&p.name,p&&p.displayName,p&&p.baseName,p&&p.baseSpecies,p&&p.base,p&&p.specialId];
+ try{vals.push(baseSpeciesName(p));}catch(e){}
+ try{vals.push(specialBaseKey(p));}catch(e){}
+ if(p&&p.activeMega){vals.push(p.activeMega.name,p.activeMega.source);}
+ if(p&&p.activeOrigin){vals.push(p.activeOrigin.name);}
+ if(p&&p.activeUnbound){vals.push(p.activeUnbound.name);}
+ return [...new Set(vals.map(questKeyV1358).filter(Boolean))];
+}
+function teamKeySetV1358(){return new Set(team.flatMap((p,i)=>keysForPokemonV1358(p,i)))}
+function hasKeyV1358(key){return teamKeySetV1358().has(key)}
+function hasAnyKeyV1358(set){const keys=teamKeySetV1358();return [...set].some(k=>keys.has(k))}
+function countKeysV1358(set){const keys=teamKeySetV1358();return [...set].filter(k=>keys.has(k)).length}
+function hasAllKeysV1358(set){const keys=teamKeySetV1358();return [...set].every(k=>keys.has(k))}
+function hasMewtwoVariantV1358(){return team.some((p,i)=>keysForPokemonV1358(p,i).some(k=>k.includes("mewtwo")))}
+function hasDarkraiVariantV1358(){return team.some((p,i)=>keysForPokemonV1358(p,i).some(k=>k.includes("darkrai")))}
+function isSilvallyV1358(p,i=0){return keysForPokemonV1358(p,i).includes("silvally")}
+function hasLakeGuardiansV1358(){return hasAllKeysV1358(new Set(["uxie","mesprit","azelf"]))}
+function hasPowerOfOneV1358(){return hasAnyKeyV1358(POWER_OF_ONE_GROUPS_V1358.lugia)&&hasAnyKeyV1358(POWER_OF_ONE_GROUPS_V1358.articuno)&&hasAnyKeyV1358(POWER_OF_ONE_GROUPS_V1358.zapdos)&&hasAnyKeyV1358(POWER_OF_ONE_GROUPS_V1358.moltres)}
+function darkestDayCountV1358(){
+ const keys=teamKeySetV1358();
+ if(!keys.has("eternatus"))return 0;
+ let count=1;
+ if(keys.has("zacian"))count++;
+ if(keys.has("zamazenta"))count++;
+ return count>=2?count:0;
+}
+function typeFullMemoryActiveV1358(){
+ return !!(selectedItem&&selectedItem.id==="elemental_plate"&&elementalPlateType&&elementalPlateType!=="legend"&&team.some((p,i)=>isSilvallyV1358(p,i)));
+}
+
+function markQuestEventV1358(name,text,phase=null){
+ if(completedQuestEventsV1358.has(name))return;
+ completedQuestEventsV1358.add(name);
+ if(typeof addRunEvent==="function")addRunEvent("Quest",text||`${name} completed.`,phase||team.length||1);
+}
+
+function awardTreasuresCoinsV1358(){
+ if(treasuresUnsealedCoinsAwardedV1358)return false;
+ if(!hasAllKeysV1358(TREASURES_OF_RUIN_V1358))return false;
+ treasuresUnsealedCoinsAwardedV1358=true;
+ const key=coinModeKey();
+ const p=getCoinPouches();
+ p[key]=(p[key]||0)+1000;
+ saveCoinPouches(p);
+ markQuestEventV1358("Treasures Unsealed","Treasures Unsealed completed: the cursed vault opened. +1000 coins.",team.length||1);
+ warn(`Treasures Unsealed: +1000 ${coinPouchLabel(key)} coins added.`);
+ try{renderCoinCase();renderBackpack();renderMartButton&&renderMartButton();}catch(e){}
+ return true;
+}
+
+function monitorImmediateQuestsV1358(beforeLakeComplete=false){
+ awardTreasuresCoinsV1358();
+ const lakeNow=hasLakeGuardiansV1358();
+ if(lakeNow&&!lakeGuardianRewardResolvedV1358&&!beforeLakeComplete){
+  lakeGuardianRewardResolvedV1358=true;
+  markQuestEventV1358("Lake Guardians: Mind, Emotion, Will","Lake Guardians: Mind, Emotion, Will completed: a creation rift opened.",team.length||1);
+  if(team.length>=ROUNDS){
+   openLakeGuardianReplacementModalV1358();
+  }else{
+   lakeGuardianGuaranteeNextV1358=true;
+   injectLakeGuardianGuaranteeIntoCurrentOptionsV1358();
+   warn("Lake Guardians opened a rift: Dialga, Palkia or Giratina will appear in this draft.");
+  }
+ }
+ if(hasKeyV1358("mew")&&hasMewtwoVariantV1358())markQuestEventV1358("Mew Project","Mew Project completed: Mew and Mewtwo resonated.",team.length||1);
+ if(hasDarkraiVariantV1358()&&hasKeyV1358("cresselia"))markQuestEventV1358("Dream Duo","Dream Duo completed: nightmare and moonlight aligned.",team.length||1);
+ if(darkestDayCountV1358())markQuestEventV1358("Darkest Day","Darkest Day completed: Eternatus warped the hero legend.",team.length||1);
+ if(typeFullMemoryActiveV1358())markQuestEventV1358("Type: Full Memory","Type: Full Memory completed: Silvally synchronized with the plate.",team.length||1);
+ if(hasPowerOfOneV1358())markQuestEventV1358("The Power of One","The Power of One completed: Lugia and the three legendary birds gathered.",team.length||1);
+ if(hasAllKeysV1358(SACRED_FIRE_SET_V1358))markQuestEventV1358("Sacred Fire","Sacred Fire completed: Ho-Oh and the legendary beasts assembled.",team.length||1);
+}
+
+async function makeCreationDragonV1358(){
+ const choices=CREATION_DRAGON_POOL_V1358.filter(n=>!usedNames.has(n));
+ const name=(choices.length?choices:CREATION_DRAGON_POOL_V1358)[Math.floor(Math.random()*(choices.length?choices.length:CREATION_DRAGON_POOL_V1358.length))];
+ let p;
+ try{p=await enrichMega(await fetchPokemon(name));}catch(e){p=normalizeFallback((FALLBACK_POOL||[]).find(x=>x.name===name)||{name,displayName:pretty(name),types:["dragon"],bst:680,sprite:"",megaForms:[]});}
+ p.lakeGuardianGuaranteed=true;
+ return p;
+}
+async function injectLakeGuardianGuaranteeIntoCurrentOptionsV1358(){
+ if(!lakeGuardianGuaranteeNextV1358||!currentOptions||!currentOptions.length||isDraftComplete())return false;
+ const p=await makeCreationDragonV1358();
+ currentOptions[0]=p;
+ lakeGuardianGuaranteeNextV1358=false;
+ if(typeof addRunEvent==="function")addRunEvent("Quest",`${p.displayName||pretty(p.name)} appeared through Mind, Emotion, Will.`,team.length+1);
+ render();
+ return true;
+}
+const __generateOptions_quest_v1358=generateOptions;
+generateOptions=async function(){
+ await __generateOptions_quest_v1358();
+ await injectLakeGuardianGuaranteeIntoCurrentOptionsV1358();
+};
+
+function ensureLakeGuardianReplacementOverlayV1358(){
+ if(document.getElementById("lakeGuardianReplaceOverlay"))return;
+ document.body.insertAdjacentHTML("beforeend",`<div id="lakeGuardianReplaceOverlay" class="useItemOverlay"><div class="useItemPanel"><div class="martHead"><div><h2>Lake Guardians: Mind, Emotion, Will</h2><p id="lakeGuardianReplaceText">A creation rift opened. Replace one non-Lake Guardian Pokémon with the visitor, or skip.</p></div><button class="btn btn-dark" onclick="closeLakeGuardianReplacementV1358(false)">Skip</button></div><div id="lakeGuardianReplaceChoices" class="useItemGrid"></div></div></div>`);
+}
+async function openLakeGuardianReplacementModalV1358(){
+ const eligible=team.map((p,i)=>LAKE_GUARDIAN_SET_V1357&&pokemonMatchesConceptSetV1357(p,LAKE_GUARDIAN_SET_V1357,i)?null:i).filter(i=>i!==null);
+ if(!eligible.length)return;
+ lakeGuardianReplacementOpenV1358=true;
+ const visitor=await makeCreationDragonV1358();
+ window.__lakeGuardianVisitorV1358=visitor;
+ ensureLakeGuardianReplacementOverlayV1358();
+ const choices=document.getElementById("lakeGuardianReplaceChoices");
+ const visitorName=visitor.displayName||pretty(visitor.name);
+ choices.innerHTML=`<div class="card" style="grid-column:1/-1;box-shadow:none"><b>${visitorName}</b> appeared through the rift. Lake Guardians cannot be replaced.</div>`+
+  eligible.map(i=>`<button class="useTarget" onclick="replaceWithLakeGuardianVisitorV1358(${i})"><img src="${currentSprite(team[i],i)||''}"><span><b>Replace ${i+1}. ${activePokemonName(team[i],i)}</b><br><span class="tscore">with ${visitorName}</span></span></button>`).join("");
+ document.getElementById("lakeGuardianReplaceOverlay").style.display="block";
+ render();
+}
+function closeLakeGuardianReplacementV1358(resume=true){
+ const el=document.getElementById("lakeGuardianReplaceOverlay");
+ if(el)el.style.display="none";
+ lakeGuardianReplacementOpenV1358=false;
+ window.__lakeGuardianVisitorV1358=null;
+ if(resume&&isDraftComplete())resumePostDraftPipeline();
+}
+function replaceWithLakeGuardianVisitorV1358(i){
+ const visitor=window.__lakeGuardianVisitorV1358;
+ if(!visitor||!team[i])return closeLakeGuardianReplacementV1358(true);
+ const old=team[i];
+ usedNames.delete(old.name);
+ team[i]=visitor;
+ usedNames.add(visitor.name);
+ if(typeof addRunEvent==="function")addRunEvent("Quest",`Mind, Emotion, Will replaced ${old.displayName||pretty(old.name)} with ${visitor.displayName||pretty(visitor.name)}.`,ROUNDS);
+ certificateAssetPreparationPromise=null;
+ render();
+ closeLakeGuardianReplacementV1358(true);
+}
+
+const __continuePostDraftPipeline_lake_v1358=continuePostDraftPipeline;
+continuePostDraftPipeline=async function(delay=150){
+ if(lakeGuardianReplacementOpenV1358)return;
+ return __continuePostDraftPipeline_lake_v1358(delay);
+};
+
+const __pickPokemon_quest_v1358=pickPokemon;
+pickPokemon=async function(i){
+ const beforeLake=hasLakeGuardiansV1358();
+ await __pickPokemon_quest_v1358(i);
+ monitorImmediateQuestsV1358(beforeLake);
+};
+
+const __restart_quest_v1358=restartGame;
+restartGame=function(){
+ lakeGuardianGuaranteeNextV1358=false;
+ lakeGuardianReplacementOpenV1358=false;
+ lakeGuardianRewardResolvedV1358=false;
+ treasuresUnsealedCoinsAwardedV1358=false;
+ completedQuestEventsV1358=new Set();
+ return __restart_quest_v1358();
+};
+const __selectItem_quest_v1358=selectItem;
+selectItem=function(id){
+ lakeGuardianGuaranteeNextV1358=false;
+ lakeGuardianReplacementOpenV1358=false;
+ lakeGuardianRewardResolvedV1358=false;
+ treasuresUnsealedCoinsAwardedV1358=false;
+ completedQuestEventsV1358=new Set();
+ return __selectItem_quest_v1358(id);
+};
+
+const __teamConcept_questfix_v1358=teamConcept;
+teamConcept=function(){
+ const current=__teamConcept_questfix_v1358();
+ if(hasLakeGuardiansV1358()&&(!current||current.key==="random"||(current.bonus||0)<=500))return {key:"lake_guardian_team",name:"Lake Guardian Team",bonus:500,reason:"Uxie, Mesprit and Azelf united. +500 bonus."};
+ return current;
+};
+
+const __activeTypes_memory_v1358=activeTypes;
+activeTypes=function(p,i){
+ if(isSilvallyV1358(p,i)&&selectedItem&&selectedItem.id==="elemental_plate"&&elementalPlateType&&elementalPlateType!=="legend")return [elementalPlateType];
+ return __activeTypes_memory_v1358(p,i);
+};
+const __activePokemonName_memory_v1358=activePokemonName;
+activePokemonName=function(p,i){
+ if(isSilvallyV1358(p,i)&&selectedItem&&selectedItem.id==="elemental_plate"&&elementalPlateType&&elementalPlateType!=="legend")return `${pretty(elementalPlateType)} Silvally`;
+ return __activePokemonName_memory_v1358(p,i);
+};
+
+const __questBreakdown_expansion_v1358=questBreakdown;
+questBreakdown=function(){
+ let q=__questBreakdown_expansion_v1358().filter(x=>x.name!=="Lake Guardians");
+ if(hasKeyV1358("mew")&&hasMewtwoVariantV1358())q.push({name:"Mew Project",points:300,reason:"Mew and a Mewtwo variant resonated."});
+ if(hasDarkraiVariantV1358()&&hasKeyV1358("cresselia"))q.push({name:"Dream Duo",points:300,reason:"Darkrai and Cresselia balanced nightmare and dream."});
+ if(hasLakeGuardiansV1358())q.push({name:"Lake Guardians: Mind, Emotion, Will",points:0,reason:"Opened a creation rift. The quest itself gives no points; Lake Guardian Team is the concept reward."});
+ const dd=darkestDayCountV1358();if(dd)q.push({name:"Darkest Day",points:dd*200,reason:`${dd} Darkest Day Pokémon selected. +200 each.`});
+ if(hasAllKeysV1358(TREASURES_OF_RUIN_V1358))q.push({name:"Treasures Unsealed",points:800,reason:"All four Treasures of Ruin opened the cursed vault."});
+ if(typeFullMemoryActiveV1358())q.push({name:"Type: Full Memory",points:300,reason:`Silvally synchronized with the ${pretty(elementalPlateType)} Plate and changed type.`});
+ if(hasPowerOfOneV1358())q.push({name:"The Power of One",points:500,reason:"Lugia and the three legendary birds gathered."});
+ if(hasAllKeysV1358(SACRED_FIRE_SET_V1358))q.push({name:"Sacred Fire",points:500,reason:"Ho-Oh and the three legendary beasts assembled."});
+ return q;
+};
+
+const __pokemonItemLabels_memory_v1358=pokemonItemLabels;
+pokemonItemLabels=function(p,i){
+ const labels=__pokemonItemLabels_memory_v1358(p,i);
+ if(isSilvallyV1358(p,i)&&selectedItem&&selectedItem.id==="elemental_plate"&&elementalPlateType&&elementalPlateType!=="legend"){
+  labels.push(`Type: Full Memory: ${pretty(elementalPlateType)} type`);
+ }
+ return [...new Set(labels)];
+};
+
+if(typeof QUEST_CATALOG!=="undefined"){
+ const addQuest=(name,rarity,desc)=>{if(!QUEST_CATALOG.some(q=>q.name===name))QUEST_CATALOG.push({name,rarity,desc});};
+ const lake=QUEST_CATALOG.find(q=>q.name==="Lake Guardians");if(lake){lake.name="Lake Guardians: Mind, Emotion, Will";lake.desc="Uxie, Mesprit and Azelf open a creation rift. No points; replacement/guarantee reward only.";}
+ addQuest("Mew Project","Mythic","Mew and any Mewtwo variant resonate for +300.");
+ addQuest("Dream Duo","Legendary","Darkrai and Cresselia balance nightmare and dream for +300.");
+ addQuest("Darkest Day","Legendary","Eternatus plus Zacian or Zamazenta grants +200 each matching Pokémon.");
+ addQuest("Treasures Unsealed","Mythic","All four Treasures of Ruin grant +800 and immediately add 1000 coins.");
+ addQuest("Type: Full Memory","Rare","Silvally with Elemental Plate gains +300 and changes type based on the plate.");
+ addQuest("The Power of One","Legendary","Lugia or Shadow Lugia plus Articuno, Zapdos and Moltres grants +500.");
+ addQuest("Sacred Fire","Legendary","Ho-Oh, Entei, Suicune and Raikou gather for +500.");
+}
+
+if(typeof COLLECTION_CONCEPT_HINTS_V1356!=="undefined"){
+ COLLECTION_CONCEPT_HINTS_V1356["Lake Guardian Team"]="Hint: Draft Uxie, Mesprit and Azelf. Concept bonus is a flat +500.";
+ COLLECTION_CONCEPT_HINTS_V1356["Royal Court"]="Hint: Draft at least 3 royal or noble Pokémon, including Galarian Slowking.";
+}
+
+
+/* ===== v13.5.9 Lake Guardian Rift Timing Fix ===== */
+let lakeGuardianFinalRiftPendingV1359=false;
+
+function selectedPickCompletesLakeGuardiansV1359(i){
+ if(!currentOptions||!currentOptions[i])return false;
+ if(hasLakeGuardiansV1358())return false;
+ const before=new Set(team.flatMap((p,idx)=>keysForPokemonV1358(p,idx)));
+ const pickedKeys=keysForPokemonV1358(currentOptions[i],team.length);
+ const after=new Set([...before,...pickedKeys]);
+ return ["uxie","mesprit","azelf"].every(k=>after.has(k));
+}
+
+const __continuePostDraftPipeline_lake_timing_v1359=continuePostDraftPipeline;
+continuePostDraftPipeline=async function(delay=150){
+ if(lakeGuardianFinalRiftPendingV1359&&!lakeGuardianReplacementOpenV1358){
+  addRunEvent&&addRunEvent("Quest","Lake Guardian rift is pending before post-draft checks.",ROUNDS);
+  return;
+ }
+ return __continuePostDraftPipeline_lake_timing_v1359(delay);
+};
+
+const __pickPokemon_lake_timing_v1359=pickPokemon;
+pickPokemon=async function(i){
+ const willCompleteLake=selectedPickCompletesLakeGuardiansV1359(i);
+ const willBeFinal=(team.length+1)>=ROUNDS;
+ if(willCompleteLake&&willBeFinal){
+  lakeGuardianFinalRiftPendingV1359=true;
+ }
+ await __pickPokemon_lake_timing_v1359(i);
+
+ if(willCompleteLake&&willBeFinal&&hasLakeGuardiansV1358()){
+  lakeGuardianRewardResolvedV1358=true;
+  markQuestEventV1358("Lake Guardians: Mind, Emotion, Will","Lake Guardians: Mind, Emotion, Will completed: a creation rift opened.",ROUNDS);
+  // Open after the render stack settles, so the modal is not swallowed by the final-score pipeline.
+  setTimeout(async()=>{
+   if(!lakeGuardianReplacementOpenV1358){
+    await openLakeGuardianReplacementModalV1358();
+   }
+   lakeGuardianFinalRiftPendingV1359=false;
+  },80);
+  return;
+ }
+
+ // Non-final completion safety: if the trio completed and options already exist, force the rift option immediately.
+ if(willCompleteLake&&!willBeFinal&&hasLakeGuardiansV1358()&&!lakeGuardianRewardResolvedV1358){
+  lakeGuardianRewardResolvedV1358=true;
+  markQuestEventV1358("Lake Guardians: Mind, Emotion, Will","Lake Guardians: Mind, Emotion, Will completed: a creation rift opened.",team.length||1);
+  lakeGuardianGuaranteeNextV1358=true;
+  await injectLakeGuardianGuaranteeIntoCurrentOptionsV1358();
+ }
+};
+
+const __replaceWithLakeGuardianVisitor_timing_v1359=replaceWithLakeGuardianVisitorV1358;
+replaceWithLakeGuardianVisitorV1358=function(i){
+ lakeGuardianFinalRiftPendingV1359=false;
+ return __replaceWithLakeGuardianVisitor_timing_v1359(i);
+};
+const __closeLakeGuardianReplacement_timing_v1359=closeLakeGuardianReplacementV1358;
+closeLakeGuardianReplacementV1358=function(resume=true){
+ lakeGuardianFinalRiftPendingV1359=false;
+ return __closeLakeGuardianReplacement_timing_v1359(resume);
+};
+
+const __restart_lake_timing_v1359=restartGame;
+restartGame=function(){
+ lakeGuardianFinalRiftPendingV1359=false;
+ return __restart_lake_timing_v1359();
+};
+const __selectItem_lake_timing_v1359=selectItem;
+selectItem=function(id){
+ lakeGuardianFinalRiftPendingV1359=false;
+ return __selectItem_lake_timing_v1359(id);
+};
+
+
+/* ===== v13.5.10 Lake Guardian Pending Rift Stale Options Fix ===== */
+function currentOptionsAreFreshForLakeRiftV13510(){
+ if(!currentOptions||!currentOptions.length)return false;
+ // If any current option is already in usedNames, this is probably the OLD draft set
+ // from before an interrupting modal such as Evolution Stone / Link Cable / quest choice.
+ return !currentOptions.some(p=>p&&usedNames&&usedNames.has(p.name));
+}
+
+const __injectLakeGuardianGuarantee_stale_fix_v13510=injectLakeGuardianGuaranteeIntoCurrentOptionsV1358;
+injectLakeGuardianGuaranteeIntoCurrentOptionsV1358=async function(){
+ if(!lakeGuardianGuaranteeNextV1358)return false;
+ if(isDraftComplete())return false;
+ if(!currentOptions||!currentOptions.length)return false;
+ if(!currentOptionsAreFreshForLakeRiftV13510()){
+  // Keep the rift pending. Do not consume it on stale options.
+  if(typeof addRunEvent==="function")addRunEvent("Quest","Mind, Emotion, Will rift waits for fresh draft options.",team.length||1);
+  return false;
+ }
+ const p=await makeCreationDragonV1358();
+ currentOptions[0]=p;
+ lakeGuardianGuaranteeNextV1358=false;
+ if(typeof addRunEvent==="function")addRunEvent("Quest",`${p.displayName||pretty(p.name)} appeared through Mind, Emotion, Will.`,team.length+1);
+ warn(`${p.displayName||pretty(p.name)} appeared through Mind, Emotion, Will.`);
+ render();
+ return true;
+};
+
+const __generateOptions_lake_pending_v13510=generateOptions;
+generateOptions=async function(){
+ await __generateOptions_lake_pending_v13510();
+ if(lakeGuardianGuaranteeNextV1358&&!isDraftComplete()){
+  await injectLakeGuardianGuaranteeIntoCurrentOptionsV1358();
+ }
+};
+
+const __closeItemModal_lake_pending_v13510=closeItemModal;
+closeItemModal=function(){
+ const out=__closeItemModal_lake_pending_v13510();
+ // closeItemModal may call continueAfterItemChoice/generateOptions asynchronously through older code.
+ // Re-check shortly after the modal flow has produced fresh options.
+ setTimeout(async()=>{
+  if(lakeGuardianGuaranteeNextV1358&&!isDraftComplete()){
+   await injectLakeGuardianGuaranteeIntoCurrentOptionsV1358();
+  }
+ },120);
+ return out;
+};
+
+const __useEvolutionStone_lake_pending_v13510=useEvolutionStone;
+useEvolutionStone=async function(i,targetName){
+ const out=await __useEvolutionStone_lake_pending_v13510(i,targetName);
+ setTimeout(async()=>{
+  if(lakeGuardianGuaranteeNextV1358&&!isDraftComplete()){
+   await injectLakeGuardianGuaranteeIntoCurrentOptionsV1358();
+  }
+ },120);
+ return out;
+};
+
+const __useRainbowFeather_lake_pending_v13510=useRainbowFeather;
+useRainbowFeather=async function(i){
+ const out=await __useRainbowFeather_lake_pending_v13510(i);
+ setTimeout(async()=>{
+  if(lakeGuardianGuaranteeNextV1358&&!isDraftComplete()){
+   await injectLakeGuardianGuaranteeIntoCurrentOptionsV1358();
+  }
+ },120);
+ return out;
+};
+
+const __pickPokemon_lake_pending_v13510=pickPokemon;
+pickPokemon=async function(i){
+ await __pickPokemon_lake_pending_v13510(i);
+ // If a modal interrupted the normal generation flow, the rift stays pending here.
+ // If fresh options already exist, this safely injects now.
+ if(lakeGuardianGuaranteeNextV1358&&!isDraftComplete()){
+  await injectLakeGuardianGuaranteeIntoCurrentOptionsV1358();
+ }
+};
+
+
+/* ===== v13.5.11 Heavy Quest Items: Colress Machine + Hero Relics ===== */
+let colressMachineUsedV13511=false;
+let heroRelicsUsedV13511=false;
+let heroRelicsResolvedV13511=false;
+
+function addStartingItemV13511(item){
+ if(typeof ITEM_POOL==="undefined")return;
+ if(!ITEM_POOL.some(x=>x.id===item.id))ITEM_POOL.push(item);
+}
+addStartingItemV13511({
+ id:"colress_machine",
+ name:"Colress Machine",
+ icon:imgIcon(itemAsset("Colress_Machine.png"),"Colress Machine"),
+ desc:"Next draft guarantees Necrozma. Solgaleo or Lunala are much more likely to appear during that draft."
+});
+addStartingItemV13511({
+ id:"hero_relics",
+ name:"Hero Relics",
+ icon:imgIcon(itemAsset("HeroRelics.png"),"Hero Relics"),
+ desc:"Next draft guarantees Zacian or Zamazenta and greatly boosts their odds. Later, turn Zacian into Crowned Sword or Zamazenta into Crowned Shield."
+});
+
+function itemMatchesSelectedV13511(id){return selectedItem&&selectedItem.id===id}
+function selectedStartingItemIsHeavyV13511(){return itemMatchesSelectedV13511("colress_machine")||itemMatchesSelectedV13511("hero_relics")}
+function heavyOptionFreshV13511(){return currentOptions&&currentOptions.length&&!isDraftComplete()&&!currentOptions.some(p=>p&&usedNames&&usedNames.has(p.name));}
+
+async function fetchOrFallbackV13511(name,types=["normal"],bst=500){
+ let p=null;
+ try{p=await enrichMega(await fetchPokemon(name));}
+ catch(e){
+  try{p=normalizeFallback((FALLBACK_POOL||[]).find(x=>x.name===name)||{name,displayName:pretty(name),types,bst,sprite:`https://play.pokemonshowdown.com/sprites/dex/${name}.png`,megaForms:[]});}
+  catch(e2){p={name,displayName:pretty(name),types,bst,sprite:`https://play.pokemonshowdown.com/sprites/dex/${name}.png`,megaForms:[]};}
+ }
+ return p;
+}
+
+async function injectColressMachineOptionsV13511(){
+ if(!itemMatchesSelectedV13511("colress_machine")||colressMachineUsedV13511||!heavyOptionFreshV13511())return false;
+ const necro=await fetchOrFallbackV13511("necrozma",["psychic"],600);
+ necro.colressGuaranteed=true;
+ currentOptions[0]=necro;
+ const candidates=["solgaleo","lunala"].filter(n=>!usedNames.has(n)&&!currentOptions.some(p=>p&&p.name===n));
+ // 300% increased odds: create a strong extra appearance chance in the same draft.
+ if(candidates.length&&Math.random()<0.75&&currentOptions.length>1){
+  const name=candidates[Math.floor(Math.random()*candidates.length)];
+  const p=await fetchOrFallbackV13511(name,name==="solgaleo"?["psychic","steel"]:["psychic","ghost"],680);
+  p.colressBoosted=true;
+  currentOptions[Math.min(1,currentOptions.length-1)]=p;
+ }
+ colressMachineUsedV13511=true;
+ addRunEvent&&addRunEvent("Item","Colress Machine activated: Necrozma guaranteed and cosmic odds boosted.",team.length+1);
+ warn("Colress Machine activated: Necrozma appeared.");
+ render();
+ return true;
+}
+
+async function injectHeroRelicsOptionsV13511(){
+ if(!itemMatchesSelectedV13511("hero_relics")||heroRelicsUsedV13511||!heavyOptionFreshV13511())return false;
+ const guaranteed=["zacian","zamazenta"].filter(n=>!usedNames.has(n));
+ const first=guaranteed.length?guaranteed[Math.floor(Math.random()*guaranteed.length)]:(Math.random()<0.5?"zacian":"zamazenta");
+ const hero=await fetchOrFallbackV13511(first,first==="zacian"?["fairy"]:["fighting"],670);
+ hero.heroRelicGuaranteed=true;
+ currentOptions[0]=hero;
+ const other=first==="zacian"?"zamazenta":"zacian";
+ if(!usedNames.has(other)&&!currentOptions.some(p=>p&&p.name===other)&&Math.random()<0.75&&currentOptions.length>1){
+  const p=await fetchOrFallbackV13511(other,other==="zacian"?["fairy"]:["fighting"],670);
+  p.heroRelicBoosted=true;
+  currentOptions[Math.min(1,currentOptions.length-1)]=p;
+ }
+ heroRelicsUsedV13511=true;
+ addRunEvent&&addRunEvent("Item","Hero Relics activated: a hero appeared and relic odds were boosted.",team.length+1);
+ warn("Hero Relics activated: Zacian or Zamazenta appeared.");
+ render();
+ return true;
+}
+
+const __generateOptions_heavy_items_v13511=generateOptions;
+generateOptions=async function(){
+ await __generateOptions_heavy_items_v13511();
+ await injectColressMachineOptionsV13511();
+ await injectHeroRelicsOptionsV13511();
+};
+
+const __selectItem_heavy_items_v13511=selectItem;
+selectItem=function(id){
+ colressMachineUsedV13511=false;
+ heroRelicsUsedV13511=false;
+ heroRelicsResolvedV13511=false;
+ return __selectItem_heavy_items_v13511(id);
+};
+const __restart_heavy_items_v13511=restartGame;
+restartGame=function(){
+ colressMachineUsedV13511=false;
+ heroRelicsUsedV13511=false;
+ heroRelicsResolvedV13511=false;
+ return __restart_heavy_items_v13511();
+};
+
+function isZacianV13511(p,i=0){return keysForPokemonV1358(p,i).some(k=>k==="zacian"||k==="zacian-crowned"||k==="crowned-zacian");}
+function isZamazentaV13511(p,i=0){return keysForPokemonV1358(p,i).some(k=>k==="zamazenta"||k==="zamazenta-crowned"||k==="crowned-zamazenta");}
+function isHeroRelicEligibleV13511(p,i=0){return (isZacianV13511(p,i)||isZamazentaV13511(p,i))&&!p.activeHeroRelic;}
+function heroRelicFormV13511(p,i=0){
+ if(isZacianV13511(p,i))return {name:"Zacian Crowned Sword",scoreBst:720,types:["fairy","steel"],sprite:"https://play.pokemonshowdown.com/sprites/dex/zacian-crowned.png",shinySprite:"https://play.pokemonshowdown.com/sprites/dex-shiny/zacian-crowned.png",key:"zacian-crowned"};
+ if(isZamazentaV13511(p,i))return {name:"Zamazenta Crowned Shield",scoreBst:720,types:["fighting","steel"],sprite:"https://play.pokemonshowdown.com/sprites/dex/zamazenta-crowned.png",shinySprite:"https://play.pokemonshowdown.com/sprites/dex-shiny/zamazenta-crowned.png",key:"zamazenta-crowned"};
+ return null;
+}
+function heroRelicEligibleIndexesV13511(){return team.map((p,i)=>isHeroRelicEligibleV13511(p,i)?i:null).filter(i=>i!==null)}
+
+const __openPostDraftItemModal_hero_relics_v13511=openPostDraftItemModal;
+openPostDraftItemModal=async function(){
+ if(selectedItem&&selectedItem.id==="hero_relics"&&!heroRelicsResolvedV13511){
+  const eligible=heroRelicEligibleIndexesV13511();
+  document.getElementById("itemModalTitle").textContent="Use Hero Relics";
+  if(!eligible.length){
+   document.getElementById("itemModalText").textContent="No Zacian or Zamazenta can use the relics.";
+   document.getElementById("itemChoicesBox").innerHTML='<div class="card">Eligible: Zacian or Zamazenta.</div>';
+   document.getElementById("itemModal").style.display="flex";
+   heroRelicsResolvedV13511=true;
+   return true;
+  }
+  document.getElementById("itemModalText").textContent="Choose Zacian or Zamazenta to unlock their crowned form.";
+  document.getElementById("itemChoicesBox").innerHTML=eligible.map(i=>{
+    const form=heroRelicFormV13511(team[i],i);
+    return `<div class="teamitem"><img src="${currentSprite(team[i],i)||''}"><div style="flex:1"><div class="tname">${i+1}. ${activePokemonName(team[i],i)}</div><div class="tscore">Becomes ${form.name} (${form.scoreBst} BST).</div></div><button class="btn btn-dark" onclick="useHeroRelicV13511(${i})">Use Relic</button></div>`;
+  }).join("");
+  document.getElementById("itemModal").style.display="flex";
+  return true;
+ }
+ return __openPostDraftItemModal_hero_relics_v13511();
+};
+
+function useHeroRelicV13511(i){
+ i=Number(i);
+ const p=team[i]; const form=heroRelicFormV13511(p,i);
+ if(!p||!form)return;
+ p.activeHeroRelic=form;
+ p.heroRelicBonus=(form.scoreBst||0)-(p.bst||0);
+ p.name=form.key;
+ p.displayName=form.name;
+ certificateAssetPreparationPromise=null;
+ addRunEvent&&addRunEvent("Item",`${form.name} awakened through Hero Relics.`,ROUNDS);
+ const remaining=heroRelicEligibleIndexesV13511();
+ if(remaining.length){
+  openPostDraftItemModal();
+ }else{
+  heroRelicsResolvedV13511=true;
+  document.getElementById("itemModal").style.display="none";
+  render();
+  continueAfterItemChoice();
+ }
+}
+
+const __closeItemModal_hero_relics_v13511=closeItemModal;
+closeItemModal=function(){
+ if(selectedItem&&selectedItem.id==="hero_relics")heroRelicsResolvedV13511=true;
+ return __closeItemModal_hero_relics_v13511();
+};
+
+const __scoreBaseFor_heavy_items_v13511=scoreBaseFor;
+scoreBaseFor=function(p,i){
+ if(p&&p.activeHeroRelic&&p.activeHeroRelic.scoreBst)return p.activeHeroRelic.scoreBst;
+ return __scoreBaseFor_heavy_items_v13511(p,i);
+};
+const __activeTypes_heavy_items_v13511=activeTypes;
+activeTypes=function(p,i){
+ if(p&&p.activeHeroRelic&&Array.isArray(p.activeHeroRelic.types))return p.activeHeroRelic.types;
+ return __activeTypes_heavy_items_v13511(p,i);
+};
+const __activePokemonName_heavy_items_v13511=activePokemonName;
+activePokemonName=function(p,i){
+ if(p&&p.activeHeroRelic&&p.activeHeroRelic.name)return p.activeHeroRelic.name;
+ return __activePokemonName_heavy_items_v13511(p,i);
+};
+const __currentSprite_heavy_items_v13511=currentSprite;
+currentSprite=function(p,i){
+ if(p&&p.activeHeroRelic)return (p.shiny&&p.activeHeroRelic.shinySprite)?p.activeHeroRelic.shinySprite:(p.activeHeroRelic.sprite||__currentSprite_heavy_items_v13511(p,i));
+ return __currentSprite_heavy_items_v13511(p,i);
+};
+
+const __pokemonItemLabels_heavy_items_v13511=pokemonItemLabels;
+pokemonItemLabels=function(p,i){
+ const labels=__pokemonItemLabels_heavy_items_v13511(p,i);
+ if(p&&p.lakeGuardianGuaranteed)labels.push("Lake Guardian Rift opened");
+ if(p&&p.colressGuaranteed)labels.push("Colress Machine: Necrozma guaranteed");
+ if(p&&p.colressBoosted)labels.push("Colress Machine: cosmic odds boosted");
+ if(p&&p.heroRelicGuaranteed)labels.push("Hero Relics: hero guaranteed");
+ if(p&&p.heroRelicBoosted)labels.push("Hero Relics: hero odds boosted");
+ if(p&&p.activeHeroRelic)labels.push("Hero Relics: Crowned Forme");
+ return [...new Set(labels)];
+};
+
+function darkestDayCountV13511(){
+ const keys=teamKeySetV1358();
+ const hasEternatus=keys.has("eternatus");
+ if(!hasEternatus)return 0;
+ let count=1;
+ if(team.some((p,i)=>isZacianV13511(p,i)))count++;
+ if(team.some((p,i)=>isZamazentaV13511(p,i)))count++;
+ return count>=2?count:0;
+}
+darkestDayCountV1358=darkestDayCountV13511;
+
+const __questBreakdown_heavy_items_v13511=questBreakdown;
+questBreakdown=function(){
+ const q=__questBreakdown_heavy_items_v13511();
+ const dark=q.find(x=>x.name==="Darkest Day");
+ if(dark){
+  const dd=darkestDayCountV13511();
+  dark.points=dd*200;
+  dark.reason=`${dd} Darkest Day Pokémon selected. +200 each. Crowned Zacian and Crowned Zamazenta count.`;
+ }
+ return q;
+};
+
+if(typeof QUEST_CATALOG!=="undefined"){
+ const q=QUEST_CATALOG.find(x=>x.name==="Darkest Day");
+ if(q)q.desc="Eternatus plus Zacian/Zamazenta, including Crowned Sword or Crowned Shield, grants +200 each matching Pokémon.";
+}
+
+
+/* ===== v13.5.12 Heavy Item Labels + Crowned Sprites ===== */
+const SPECIAL_SPRITE_BASE_V13512="assets/special/";
+
+function setGuaranteedItemLabelsV13512(){
+ const oldPokemonItemLabels=pokemonItemLabels;
+ pokemonItemLabels=function(p,i){
+  let labels=oldPokemonItemLabels(p,i);
+  labels=labels.filter(x=>![
+   "Colress Machine: Necrozma guaranteed",
+   "Hero Relics: hero guaranteed",
+   "Hero Relics: hero odds boosted",
+   "Colress Machine: cosmic odds boosted"
+  ].includes(x));
+  if(p&&p.colressGuaranteed)labels.push("Colress Machine: guaranteed Necrozma");
+  if(p&&p.heroRelicGuaranteed){
+   const n=String(p.name||p.displayName||"").toLowerCase();
+   if(n.includes("zacian"))labels.push("Hero Relics: guaranteed Zacian");
+   else if(n.includes("zamazenta"))labels.push("Hero Relics: guaranteed Zamazenta");
+   else labels.push("Hero Relics: guaranteed Pokémon");
+  }
+  if(p&&p.colressBoosted){
+   const n=String(p.name||p.displayName||"").toLowerCase();
+   if(n.includes("solgaleo"))labels.push("Colress Machine: boosted Solgaleo odds");
+   else if(n.includes("lunala"))labels.push("Colress Machine: boosted Lunala odds");
+   else labels.push("Colress Machine: boosted cosmic odds");
+  }
+  if(p&&p.heroRelicBoosted){
+   const n=String(p.name||p.displayName||"").toLowerCase();
+   if(n.includes("zacian"))labels.push("Hero Relics: boosted Zacian odds");
+   else if(n.includes("zamazenta"))labels.push("Hero Relics: boosted Zamazenta odds");
+   else labels.push("Hero Relics: boosted hero odds");
+  }
+  return [...new Set(labels)];
+ };
+}
+
+const __heroRelicForm_sprite_v13512=heroRelicFormV13511;
+heroRelicFormV13511=function(p,i=0){
+ const form=__heroRelicForm_sprite_v13512(p,i);
+ if(!form)return form;
+ if(form.key==="zacian-crowned"){
+  form.sprite=SPECIAL_SPRITE_BASE_V13512+"Zacian_CrownedSword.png";
+  form.shinySprite=SPECIAL_SPRITE_BASE_V13512+"Zacian_CrownedSword.png";
+ }
+ if(form.key==="zamazenta-crowned"){
+  form.sprite=SPECIAL_SPRITE_BASE_V13512+"Zamazenta_CrownedShield.png";
+  form.shinySprite=SPECIAL_SPRITE_BASE_V13512+"Zamazenta_CrownedShield.png";
+ }
+ return form;
+};
+
+setGuaranteedItemLabelsV13512();
+
+
+/* ===== v13.5.14 Hero Relics Immediate Crown + Draft Labels + Legendary Heroes ===== */
+function heavyDraftOptionLabelV13514(p){
+ if(!p)return "";
+ const n=String(p.name||p.displayName||"").toLowerCase();
+ if(p.colressGuaranteed)return "Colress Machine: guaranteed Necrozma";
+ if(p.heroRelicGuaranteed){
+  if(n.includes("zacian"))return "Hero Relics: guaranteed Zacian";
+  if(n.includes("zamazenta"))return "Hero Relics: guaranteed Zamazenta";
+  return "Hero Relics: guaranteed Pokémon";
+ }
+ if(p.colressBoosted){
+  if(n.includes("solgaleo"))return "Colress Machine: boosted Solgaleo odds";
+  if(n.includes("lunala"))return "Colress Machine: boosted Lunala odds";
+  return "Colress Machine: boosted cosmic odds";
+ }
+ if(p.heroRelicBoosted){
+  if(n.includes("zacian"))return "Hero Relics: boosted Zacian odds";
+  if(n.includes("zamazenta"))return "Hero Relics: boosted Zamazenta odds";
+  return "Hero Relics: boosted hero odds";
+ }
+ return "";
+}
+function draftOptionItemBadgesV13514(p,i){
+ const label=heavyDraftOptionLabelV13514(p);
+ const legacy=(p&&p.itemGuaranteed)?ITEM_DRAFT_LABEL:"";
+ const shown=label||legacy;
+ return shown?`<div class="itemlabel">${shown}</div>`:"";
+}
+function draftOptionBottomNoteV13514(p){
+ return heavyDraftOptionLabelV13514(p)||(p&&p.itemGuaranteed?ITEM_DRAFT_LABEL:"");
+}
+function heroAwakenBonusV13514(p,i){
+ if(!p||!p.activeHeroRelic)return 0;
+ const target=Number(p.activeHeroRelic.scoreBst||0);
+ const base=Number(p.heroRelicOriginalBst||p.bst||0);
+ return Math.max(0,target-base);
+}
+function heroRelicAwakenLabelV13514(p,i){
+ const b=heroAwakenBonusV13514(p,i);
+ return b?`Hero awakened: +${b}`:"Hero awakened";
+}
+function crownHeroRelicPokemonV13514(p,iForForm){
+ if(!selectedItem||selectedItem.id!=="hero_relics"||!p)return false;
+ if(!isHeroRelicEligibleV13511(p,iForForm))return false;
+ const form=heroRelicFormV13511(p,iForForm);
+ if(!form)return false;
+ p.heroRelicOriginalBst=Number(p.bst||0);
+ p.activeHeroRelic=form;
+ p.heroRelicBonus=(form.scoreBst||0)-(p.bst||0);
+ p.name=form.key;
+ p.displayName=form.name;
+ p.types=form.types||p.types;
+ p.sprite=form.sprite||p.sprite;
+ p.heroRelicImmediate=true;
+ if(typeof heroRelicsResolvedV13511!=="undefined")heroRelicsResolvedV13511=true;
+ addRunEvent&&addRunEvent("Item",`${form.name} awakened immediately through Hero Relics.`,team.length+1);
+ return true;
+}
+
+const __pickPokemon_hero_immediate_v13514=pickPokemon;
+pickPokemon=async function(i){
+ if(currentOptions&&currentOptions[i]){
+  crownHeroRelicPokemonV13514(currentOptions[i],team.length);
+ }
+ return __pickPokemon_hero_immediate_v13514(i);
+};
+
+const __pokemonItemLabels_hero_awaken_v13514=pokemonItemLabels;
+pokemonItemLabels=function(p,i){
+ const labels=__pokemonItemLabels_hero_awaken_v13514(p,i);
+ if(p&&p.activeHeroRelic)labels.push(heroRelicAwakenLabelV13514(p,i));
+ return [...new Set(labels)];
+};
+
+function hasCrownedSwordV13514(){
+ return team.some((p,i)=>keysForPokemonV1358(p,i).some(k=>k==="zacian-crowned"||k==="crowned-zacian")||(p&&p.activeHeroRelic&&p.activeHeroRelic.key==="zacian-crowned"));
+}
+function hasCrownedShieldV13514(){
+ return team.some((p,i)=>keysForPokemonV1358(p,i).some(k=>k==="zamazenta-crowned"||k==="crowned-zamazenta")||(p&&p.activeHeroRelic&&p.activeHeroRelic.key==="zamazenta-crowned"));
+}
+const __questBreakdown_legendary_heroes_v13514=questBreakdown;
+questBreakdown=function(){
+ const q=__questBreakdown_legendary_heroes_v13514();
+ if(hasCrownedSwordV13514()&&hasCrownedShieldV13514()&&!q.some(x=>x.name==="Legendary Heroes")){
+  q.push({name:"Legendary Heroes",points:300,reason:"Crowned Sword and Crowned Shield stand together."});
+ }
+ return q;
+};
+if(typeof QUEST_CATALOG!=="undefined"&&!QUEST_CATALOG.some(q=>q.name==="Legendary Heroes")){
+ QUEST_CATALOG.push({name:"Legendary Heroes",rarity:"Legendary",desc:"Have both Zacian Crowned Sword and Zamazenta Crowned Shield in your team for +300."});
+}
+
+
+/* ===== v13.5.15 Hero Relics Double Awakening Fix ===== */
+function heroRelicBaseKeyV13515(p,i=0){
+ const keys=[];
+ try{keys.push(...keysForPokemonV1358(p,i));}catch(e){}
+ keys.push(String(p&&p.name||""),String(p&&p.displayName||""),String(p&&p.baseName||""),String(p&&p.baseSpecies||""));
+ return keys.map(x=>String(x||"").toLowerCase().replace(/_/g,"-").replace(/\s+/g,"-")).filter(Boolean);
+}
+function isZacianAnyV13515(p,i=0){
+ return heroRelicBaseKeyV13515(p,i).some(k=>k==="zacian"||k==="zacian-hero"||k==="zacian-crowned"||k==="crowned-zacian"||k.includes("zacian"));
+}
+function isZamazentaAnyV13515(p,i=0){
+ return heroRelicBaseKeyV13515(p,i).some(k=>k==="zamazenta"||k==="zamazenta-hero"||k==="zamazenta-crowned"||k==="crowned-zamazenta"||k.includes("zamazenta"));
+}
+function isHeroRelicEligibleV13515(p,i=0){
+ if(!p||p.activeHeroRelic)return false;
+ return isZacianAnyV13515(p,i)||isZamazentaAnyV13515(p,i);
+}
+function heroRelicFormV13515(p,i=0){
+ if(isZacianAnyV13515(p,i))return {name:"Zacian Crowned Sword",scoreBst:720,types:["fairy","steel"],sprite:"assets/special/Zacian_CrownedSword.png",shinySprite:"assets/special/Zacian_CrownedSword.png",key:"zacian-crowned"};
+ if(isZamazentaAnyV13515(p,i))return {name:"Zamazenta Crowned Shield",scoreBst:720,types:["fighting","steel"],sprite:"assets/special/Zamazenta_CrownedShield.png",shinySprite:"assets/special/Zamazenta_CrownedShield.png",key:"zamazenta-crowned"};
+ return null;
+}
+function crownHeroRelicPokemonV13515(p,iForForm){
+ if(!selectedItem||selectedItem.id!=="hero_relics"||!p||p.activeHeroRelic)return false;
+ if(!isHeroRelicEligibleV13515(p,iForForm))return false;
+ const form=heroRelicFormV13515(p,iForForm);
+ if(!form)return false;
+ p.heroRelicOriginalBst=Number(p.bst||660);
+ p.activeHeroRelic=form;
+ p.heroRelicBonus=(form.scoreBst||0)-(p.heroRelicOriginalBst||p.bst||0);
+ p.name=form.key;
+ p.displayName=form.name;
+ p.types=form.types||p.types;
+ p.sprite=form.sprite||p.sprite;
+ p.heroRelicImmediate=true;
+ addRunEvent&&addRunEvent("Item",`${form.name} awakened through Hero Relics.`,Math.min(ROUNDS,team.length+1));
+ return true;
+}
+
+// Override the older helper references so older code paths also recognize hero formes.
+isZacianV13511=function(p,i=0){return isZacianAnyV13515(p,i);}
+isZamazentaV13511=function(p,i=0){return isZamazentaAnyV13515(p,i);}
+isHeroRelicEligibleV13511=function(p,i=0){return isHeroRelicEligibleV13515(p,i);}
+heroRelicFormV13511=function(p,i=0){return heroRelicFormV13515(p,i);};
+
+const __pickPokemon_hero_double_v13515=pickPokemon;
+pickPokemon=async function(i){
+ if(currentOptions&&currentOptions[i])crownHeroRelicPokemonV13515(currentOptions[i],team.length);
+ const before=team.length;
+ const out=await __pickPokemon_hero_double_v13515(i);
+ // Safety net: some item/modal flows clone or replace the picked Pokémon after the first hook.
+ // Crown the newly added team member as well.
+ if(selectedItem&&selectedItem.id==="hero_relics"&&team.length>before){
+  crownHeroRelicPokemonV13515(team[team.length-1],team.length-1);
+  certificateAssetPreparationPromise=null;
+  render();
+ }
+ return out;
+};
+
+function crownAllHeroRelicsInTeamV13515(){
+ if(!selectedItem||selectedItem.id!=="hero_relics")return false;
+ let changed=false;
+ team.forEach((p,i)=>{if(crownHeroRelicPokemonV13515(p,i))changed=true;});
+ if(changed){certificateAssetPreparationPromise=null;}
+ return changed;
+}
+const __render_hero_double_v13515=render;
+render=function(){
+ crownAllHeroRelicsInTeamV13515();
+ return __render_hero_double_v13515();
+};
+
+
+/* ===== v13.5.16 Necrozma Twilight Fusion Quest ===== */
+let necrozmaTwilightCompleted=false;
+
+const NECROZMA_TWILIGHT_FUSIONS={
+ solgaleo:{
+  name:"Dusk Mane Necrozma",
+  scoreBst:760,
+  types:["psychic","steel"],
+  sprite:"assets/special/Necrozma_Dusk_Mane.png",
+  shinySprite:"assets/special/Necrozma_Dusk_Mane.png",
+  pokeapi:"necrozma-dusk-mane",
+  partnerLabel:"Solgaleo"
+ },
+ lunala:{
+  name:"Dawn Wings Necrozma",
+  scoreBst:760,
+  types:["psychic","ghost"],
+  sprite:"assets/special/Necrozma_Dawn_Wings.png",
+  shinySprite:"assets/special/Necrozma_Dawn_Wings.png",
+  pokeapi:"necrozma-dawn-wings",
+  partnerLabel:"Lunala"
+ }
+};
+
+function necrozmaTwilightKeyV13516(p,i=0){
+ const vals=[];
+ try{vals.push(...keysForPokemonV1358(p,i));}catch(e){}
+ vals.push(p&&p.name,p&&p.displayName,p&&p.baseName,p&&p.baseSpecies);
+ return vals.map(x=>String(x||"").toLowerCase().replace(/_/g,"-").replace(/\s+/g,"-")).filter(Boolean);
+}
+function isBaseNecrozmaV13516(p,i=0){
+ if(!p||p.necrozmaTwilightFusion)return false;
+ return necrozmaTwilightKeyV13516(p,i).some(k=>k==="necrozma");
+}
+function isSolgaleoV13516(p,i=0){return necrozmaTwilightKeyV13516(p,i).some(k=>k==="solgaleo");}
+function isLunalaV13516(p,i=0){return necrozmaTwilightKeyV13516(p,i).some(k=>k==="lunala");}
+
+function necrozmaTwilightOptions(){
+ if(necrozmaTwilightCompleted)return [];
+ const necrozmaIndex=team.findIndex((p,i)=>isBaseNecrozmaV13516(p,i));
+ if(necrozmaIndex<0)return [];
+ const opts=[];
+ const solgaleoIndex=team.findIndex((p,i)=>i!==necrozmaIndex&&isSolgaleoV13516(p,i));
+ const lunalaIndex=team.findIndex((p,i)=>i!==necrozmaIndex&&isLunalaV13516(p,i));
+ if(solgaleoIndex>=0)opts.push({partner:"solgaleo",partnerIndex:solgaleoIndex,necrozmaIndex});
+ if(lunalaIndex>=0)opts.push({partner:"lunala",partnerIndex:lunalaIndex,necrozmaIndex});
+ return opts;
+}
+
+async function openNecrozmaTwilightModal(){
+ const opts=necrozmaTwilightOptions();
+ if(!opts.length)return false;
+ document.getElementById("itemModalTitle").textContent="Hidden Quest: Necrozma Twilight";
+ document.getElementById("itemModalText").textContent="Necrozma can fuse with Solgaleo or Lunala. The two Pokémon become one, and you reopen one draft slot.";
+ document.getElementById("itemChoicesBox").innerHTML=opts.map(o=>{
+  const form=NECROZMA_TWILIGHT_FUSIONS[o.partner];
+  return `<div class="teamitem"><img src="${currentSprite(team[o.partnerIndex],o.partnerIndex)||''}"><div style="flex:1"><div class="tname">Fuse Necrozma + ${team[o.partnerIndex].displayName||form.partnerLabel}</div><div class="tscore">Creates ${form.name} (${form.scoreBst} BST), +80 Twilight fusion power, +300 quest bonus, opens one slot. If one fusion partner is shiny, the fusion is shiny. If both are shiny, both shiny bonuses count.</div></div><button type="button" class="btn btn-dark" onclick="useNecrozmaTwilight('${o.partner}')">Fuse</button></div>`;
+ }).join("");
+ document.getElementById("itemModal").style.display="flex";
+ return true;
+}
+
+async function useNecrozmaTwilight(partnerName){
+ const opts=necrozmaTwilightOptions();
+ const opt=opts.find(o=>o.partner===partnerName);
+ if(!opt)return;
+ const necrozmaIndex=opt.necrozmaIndex;
+ const partnerIndex=opt.partnerIndex;
+ const necrozma=team[necrozmaIndex], partner=team[partnerIndex];
+ const form=NECROZMA_TWILIGHT_FUSIONS[partnerName];
+ const fusionShiny=!!(necrozma.shiny||partner.shiny);
+ const doubleShiny=!!(necrozma.shiny&&partner.shiny);
+ const baseBst=Number(necrozma.bst||600);
+ const fusedBst=Number(form.scoreBst||760);
+ team[necrozmaIndex]={
+  ...necrozma,
+  name:form.pokeapi,
+  displayName:form.name,
+  types:form.types,
+  bst:fusedBst,
+  sprite:form.sprite||necrozma.sprite,
+  shinySprite:form.shinySprite||necrozma.shinySprite,
+  shiny:fusionShiny,
+  shinyBonus:fusionShiny?SHINY_BONUS:0,
+  extraShinyBonus:doubleShiny?SHINY_BONUS:0,
+  activePrimal:null,
+  activeMega:null,
+  activeHeroRelic:null,
+  activeOrigin:null,
+  activeUnbound:null,
+  activeGmax:null,
+  fusedWith:partnerName,
+  necrozmaTwilightFusion:true,
+  necrozmaTwilightPartner:partnerName,
+  necrozmaTwilightBonus:80,
+  necrozmaTwilightOriginalBst:baseBst,
+  necrozmaTwilightScoreBst:fusedBst,
+  megaForms:[]
+ };
+ usedNames.delete(partner.name);
+ team.splice(partnerIndex,1);
+ if(selectedMegaIndex!==null){
+  if(selectedMegaIndex===partnerIndex||selectedMegaIndex===necrozmaIndex)selectedMegaIndex=null;
+  else if(selectedMegaIndex>partnerIndex)selectedMegaIndex--;
+ }
+ necrozmaTwilightCompleted=true;
+ certificateAssetPreparationPromise=null;
+ markQuest(form.name,300,`Necrozma Twilight fused Necrozma with ${form.partnerLabel}, opening one team slot.`);
+ addRunEvent&&addRunEvent("Quest",`Necrozma Twilight: ${form.name} awakened.`,Math.min(ROUNDS,team.length+1));
+ document.getElementById("itemModal").style.display="none";
+ render();
+ if(team.length<ROUNDS){await generateOptions();return}
+ continueAfterHiddenQuest();
+}
+
+const __openHiddenQuestModal_necrozma_v13516=openHiddenQuestModal;
+openHiddenQuestModal=async function(){
+ if(await openNecrozmaTwilightModal())return true;
+ return __openHiddenQuestModal_necrozma_v13516();
+};
+
+const __questBreakdown_necrozma_v13516=questBreakdown;
+questBreakdown=function(){
+ const q=__questBreakdown_necrozma_v13516();
+ if(necrozmaTwilightCompleted&&!q.some(x=>x.name==="Necrozma Twilight")){
+  q.push({name:"Necrozma Twilight",points:300,reason:"Necrozma fused with Solgaleo or Lunala and opened one team slot."});
+ }
+ return q;
+};
+
+const __scoreBaseFor_necrozma_v13516=scoreBaseFor;
+scoreBaseFor=function(p,i){
+ if(p&&p.necrozmaTwilightFusion&&p.necrozmaTwilightScoreBst)return p.necrozmaTwilightScoreBst;
+ return __scoreBaseFor_necrozma_v13516(p,i);
+};
+const __activePokemonName_necrozma_v13516=activePokemonName;
+activePokemonName=function(p,i){
+ if(p&&p.necrozmaTwilightFusion)return p.displayName||"Twilight Necrozma";
+ return __activePokemonName_necrozma_v13516(p,i);
+};
+const __activeTypes_necrozma_v13516=activeTypes;
+activeTypes=function(p,i){
+ if(p&&p.necrozmaTwilightFusion&&Array.isArray(p.types))return p.types;
+ return __activeTypes_necrozma_v13516(p,i);
+};
+const __currentSprite_necrozma_v13516=currentSprite;
+currentSprite=function(p,i){
+ if(p&&p.necrozmaTwilightFusion)return (p.shiny&&p.shinySprite)?p.shinySprite:(p.sprite||__currentSprite_necrozma_v13516(p,i));
+ return __currentSprite_necrozma_v13516(p,i);
+};
+
+const __pokemonItemLabels_necrozma_v13516=pokemonItemLabels;
+pokemonItemLabels=function(p,i){
+ const labels=__pokemonItemLabels_necrozma_v13516(p,i);
+ if(p&&p.necrozmaTwilightFusion)labels.push(`Necrozma Twilight: +${p.necrozmaTwilightBonus||80}`);
+ return [...new Set(labels)];
+};
+
+const __restart_necrozma_v13516=restartGame;
+restartGame=function(){
+ necrozmaTwilightCompleted=false;
+ return __restart_necrozma_v13516();
+};
+const __selectItem_necrozma_v13516=selectItem;
+selectItem=function(id){
+ necrozmaTwilightCompleted=false;
+ return __selectItem_necrozma_v13516(id);
+};
+
+if(typeof QUEST_CATALOG!=="undefined"&&!QUEST_CATALOG.some(q=>q.name==="Necrozma Twilight")){
+ QUEST_CATALOG.push({name:"Necrozma Twilight",rarity:"Mythic",desc:"Fuse Necrozma with Solgaleo or Lunala into Dusk Mane or Dawn Wings Necrozma. Opens one team slot and grants +300."});
+}
+
+
+/* ===== v13.5.17 Necrozma Twilight Immediate Trigger Fix ===== */
+let necrozmaTwilightModalOpenV13517=false;
+
+async function tryOpenNecrozmaTwilightImmediateV13517(){
+ if(necrozmaTwilightCompleted||necrozmaTwilightModalOpenV13517)return false;
+ if(!necrozmaTwilightOptions||!necrozmaTwilightOptions().length)return false;
+ const modal=document.getElementById("itemModal");
+ if(modal&&modal.style&&modal.style.display==="flex")return false;
+ necrozmaTwilightModalOpenV13517=true;
+ const opened=await openNecrozmaTwilightModal();
+ if(!opened)necrozmaTwilightModalOpenV13517=false;
+ return opened;
+}
+
+const __pickPokemon_necrozma_immediate_v13517=pickPokemon;
+pickPokemon=async function(i){
+ const beforeCompleted=!!necrozmaTwilightCompleted;
+ const out=await __pickPokemon_necrozma_immediate_v13517(i);
+ if(!beforeCompleted&&!necrozmaTwilightCompleted){
+  // The original pick flow may already have generated the next options.
+  // That is okay: pause here and let the fusion modal open as soon as the pair exists.
+  await tryOpenNecrozmaTwilightImmediateV13517();
+ }
+ return out;
+};
+
+const __useNecrozmaTwilight_immediate_v13517=useNecrozmaTwilight;
+useNecrozmaTwilight=async function(partnerName){
+ necrozmaTwilightModalOpenV13517=false;
+ return __useNecrozmaTwilight_immediate_v13517(partnerName);
+};
+
+const __openHiddenQuestModal_necrozma_immediate_v13517=openHiddenQuestModal;
+openHiddenQuestModal=async function(){
+ // Keep post-draft behavior as fallback, but avoid double-opening if immediate modal is already active.
+ if(necrozmaTwilightModalOpenV13517)return true;
+ return __openHiddenQuestModal_necrozma_immediate_v13517();
+};
+
+const __restart_necrozma_immediate_v13517=restartGame;
+restartGame=function(){
+ necrozmaTwilightModalOpenV13517=false;
+ return __restart_necrozma_immediate_v13517();
+};
+const __selectItem_necrozma_immediate_v13517=selectItem;
+selectItem=function(id){
+ necrozmaTwilightModalOpenV13517=false;
+ return __selectItem_necrozma_immediate_v13517(id);
+};
+
+
+/* ===== v13.5.18 Battle Reward Coins ===== */
+const BATTLE_REWARD_AWARDED_KEY_V13518="pokemon_colosseum_battle_reward_awarded_runs_v1";
+const BATTLE_REWARD_RATES_V13518={
+ easy:{gym:5,elite:10,champ:100,legend:500},
+ normal:{gym:10,elite:20,champ:200,legend:750},
+ master:{gym:20,elite:40,champ:400,legend:1000}
+};
+function getBattleRewardAwardedRunsV13518(){
+ try{return JSON.parse(localStorage.getItem(BATTLE_REWARD_AWARDED_KEY_V13518)||"[]")||[]}catch(e){return []}
+}
+function saveBattleRewardAwardedRunsV13518(list){
+ try{localStorage.setItem(BATTLE_REWARD_AWARDED_KEY_V13518,JSON.stringify([...new Set(list)].slice(-300)))}catch(e){}
+}
+function battleRewardModeKeyV13518(entry){
+ const raw=String((entry&&entry.difficulty)||difficultyMode||"normal").replace(" Mode","").toLowerCase();
+ return raw==="master"?"master":raw==="easy"?"easy":"normal";
+}
+function battleRewardStatsV13518(){
+ try{
+  const res=leagueResult();
+  return {
+   gyms:Number(res.gyms)||0,
+   elite:Number(res.elite)||0,
+   champ:!!res.champ,
+   legend:!!res.legend
+  };
+ }catch(e){
+  return {gyms:0,elite:0,champ:false,legend:false};
+ }
+}
+function calculateBattleRewardCoinsV13518(mode,stats){
+ const rates=BATTLE_REWARD_RATES_V13518[mode]||BATTLE_REWARD_RATES_V13518.normal;
+ const gyms=Math.max(0,Number(stats&&stats.gyms)||0);
+ const elite=Math.max(0,Number(stats&&stats.elite)||0);
+ const champ=stats&&stats.champ?1:0;
+ const legend=stats&&stats.legend?1:0;
+ return {
+  gymCoins:gyms*rates.gym,
+  eliteCoins:elite*rates.elite,
+  champCoins:champ*rates.champ,
+  legendCoins:legend*rates.legend,
+  total:(gyms*rates.gym)+(elite*rates.elite)+(champ*rates.champ)+(legend*rates.legend),
+  gyms,elite,champ:!!champ,legend:!!legend,
+  rates
+ };
+}
+function awardBattleRewardCoinsV13518(entry){
+ if(!entry||!entry.id)return 0;
+ const done=getBattleRewardAwardedRunsV13518();
+ if(done.includes(entry.id))return 0;
+ const mode=battleRewardModeKeyV13518(entry);
+ const stats=entry.battleRewardStats||battleRewardStatsV13518();
+ const reward=calculateBattleRewardCoinsV13518(mode,stats);
+ if(reward.total>0){
+  const p=getCoinPouches();
+  p[mode]=(p[mode]||0)+reward.total;
+  saveCoinPouches(p);
+  const parts=[];
+  if(reward.gymCoins)parts.push(`${reward.gyms} Gym Leader${reward.gyms===1?"":"s"}: +${reward.gymCoins}`);
+  if(reward.eliteCoins)parts.push(`${reward.elite} Elite Four: +${reward.eliteCoins}`);
+  if(reward.champCoins)parts.push(`Champion: +${reward.champCoins}`);
+  if(reward.legendCoins)parts.push(`Legendary Trainer: +${reward.legendCoins}`);
+  addRunEvent&&addRunEvent("Coins",`Battle rewards: +${reward.total} ${mode} coins. ${parts.join("; ")}.`,ROUNDS);
+  warn(`Battle Rewards: +${reward.total} ${coinPouchLabel(mode)} coins.`);
+  renderCoinCase&&renderCoinCase();
+ }
+ done.push(entry.id);
+ saveBattleRewardAwardedRunsV13518(done);
+ return reward.total;
+}
+const __buildRunHistoryEntry_battle_rewards_v13518=buildRunHistoryEntry;
+buildRunHistoryEntry=function(){
+ const entry=__buildRunHistoryEntry_battle_rewards_v13518();
+ const mode=battleRewardModeKeyV13518(entry);
+ const stats=battleRewardStatsV13518();
+ const reward=calculateBattleRewardCoinsV13518(mode,stats);
+ entry.battleRewardStats=stats;
+ entry.battleRewardCoins=reward.total;
+ entry.battleRewardBreakdown=reward;
+ return entry;
+};
+const __awardCoinsForRun_battle_rewards_v13518=awardCoinsForRun;
+awardCoinsForRun=function(entry){
+ const base=__awardCoinsForRun_battle_rewards_v13518(entry);
+ const battle=awardBattleRewardCoinsV13518(entry);
+ return (Number(base)||0)+(Number(battle)||0);
 };
 
 boot();
